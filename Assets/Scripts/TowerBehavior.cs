@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerBehavior : MonoBehaviour
+public abstract class TowerBehavior : MonoBehaviour
 {
 
-    private float range;
-    private List<GameObject> enemiesInRange = new List<GameObject> ();
+    protected float range;
+    protected List<GameObject> enemiesInRange = new List<GameObject> ();
     [SerializeField] private GameObject rangeIndicator;
     private bool isEnemyInRange = false;
-    private float attackFrequency = 1f;
-
+    protected float attackFrequency { get; set; }
 
     private void OnEnable()
     {
@@ -23,7 +22,7 @@ public class TowerBehavior : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         DisableRangeIndicator();
     }
@@ -39,9 +38,8 @@ public class TowerBehavior : MonoBehaviour
         while (isEnemyInRange)
         {
             Attack();
-            yield return new WaitForSeconds(attackFrequency);
+            yield return new WaitForSeconds(1/attackFrequency);
         }
-        yield return new WaitForSeconds(attackFrequency);
 
     }
 
