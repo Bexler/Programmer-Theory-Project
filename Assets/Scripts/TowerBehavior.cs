@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class TowerBehavior : MonoBehaviour
@@ -7,18 +8,19 @@ public abstract class TowerBehavior : MonoBehaviour
 
     protected float range;
     protected List<GameObject> enemiesInRange = new List<GameObject> ();
+    protected List<GameObject> defeatedEnemies = new List<GameObject> ();
     [SerializeField] private GameObject rangeIndicator;
     private bool isEnemyInRange = false;
     protected float attackFrequency { get; set; }
 
     private void OnEnable()
     {
-        EventManager.Instance.OnEnemyDeath += RemoveEnemyInRange;
+        EventManager.Instance.OnEnemyDeath += AddDefeatedEnemy;
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.OnEnemyDeath -= RemoveEnemyInRange;
+        EventManager.Instance.OnEnemyDeath -= AddDefeatedEnemy;
     }
 
     // Start is called before the first frame update
@@ -31,6 +33,14 @@ public abstract class TowerBehavior : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void LateUpdate()
+    {
+        if(defeatedEnemies.Count > 0)
+        {
+            UpdateEnemiesInRange();
+        }
     }
 
     IEnumerator AttackRoutine()
@@ -47,6 +57,9 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            //for testing purposes show the amount of towers that the enemy is in range for
+            other.GetComponent<EnemyBehavior>().towerTargetCount++;
+
             Debug.Log("Found Enemy!");
             AddEnemyInRange(other.gameObject);
         }
@@ -56,6 +69,9 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            //for testing purposes show the amount of towers that the enemy is in range for
+            other.GetComponent<EnemyBehavior>().towerTargetCount--;
+
             Debug.Log("Lost Enemy!");
             RemoveEnemyInRange(other.gameObject);
         }
@@ -71,6 +87,20 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         enemiesInRange.Remove(enemy);
         CheckLastEnemyInRange();
+    }
+
+    private void AddDefeatedEnemy(GameObject enemy)
+    {
+        defeatedEnemies.Add(enemy);
+    }
+
+    protected void UpdateEnemiesInRange()
+    {
+        for(int i = 0; i < defeatedEnemies.Count; i++)
+        {
+            enemiesInRange.Remove(defeatedEnemies[i]);
+        }
+        defeatedEnemies.Clear();
     }
 
     private void CheckFirstEnemyInRange()
@@ -100,12 +130,5 @@ public abstract class TowerBehavior : MonoBehaviour
         rangeIndicator.SetActive(true);
     }
 
-    protected virtual void Attack()
-    {
-        Debug.Log("Attac!");
-        foreach(GameObject enemy in enemiesInRange)
-        {
-            Destroy(enemy);
-        }
-    }
+    protected abstract void Attack();
 }

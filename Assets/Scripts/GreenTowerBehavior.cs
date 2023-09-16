@@ -23,8 +23,5 @@ public class GreenTowerBehavior : TowerBehavior
         }
     }
 
-    private void SetAttackFrquency()
-    {
-        attackFrequency = 5f;
-    }
+
 }

@@ -7,6 +7,7 @@ public class MainUIManager : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI goldText;   
 
     private string playerName;
 
@@ -26,5 +27,10 @@ public class MainUIManager : MonoBehaviour
     private void UpdateNameText()
     {
         nameText.text = playerName;
+    }
+
+    public void UpdateGoldText(int gold)
+    {
+        goldText.text = "" + gold + 'g';
     }
 }
