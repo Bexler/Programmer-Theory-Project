@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2845917110381459530, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_Name
-      value: Tower Cube Red Variant
+      value: Tower Cube Red
       objectReference: {fileID: 0}
     - target: {fileID: 7620339554357805050, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2a45c7f5d2304d044841ff721d5b561f, type: 2}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -85,3 +85,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d295beba7072b4889c13baa6269bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeIndicator: {fileID: 2708842547716550598}
+  targetEnemy: {fileID: 0}
+--- !u!1 &2708842547716550598 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1685443106712440744, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
+  m_PrefabInstance: {fileID: 3671656776587157614}
+  m_PrefabAsset: {fileID: 0}

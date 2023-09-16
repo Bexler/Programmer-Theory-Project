@@ -83,7 +83,7 @@ public abstract class TowerBehavior : MonoBehaviour
         CheckFirstEnemyInRange();
     }
 
-    private void RemoveEnemyInRange(GameObject enemy)
+    protected virtual void RemoveEnemyInRange(GameObject enemy)
     {
         enemiesInRange.Remove(enemy);
         CheckLastEnemyInRange();

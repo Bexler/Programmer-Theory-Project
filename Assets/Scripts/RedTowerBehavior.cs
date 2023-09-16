@@ -5,7 +5,8 @@ using UnityEngine;
 public class RedTowerBehavior : TowerBehavior
 {
 
-    private EnemyBehavior laserTargetScript;
+    [SerializeField] private GameObject targetEnemy;
+    private EnemyBehavior targetEnemyScript;
     private float damage = 0.5f;
 
     protected override void Start()
@@ -18,30 +19,45 @@ public class RedTowerBehavior : TowerBehavior
     private void UpdateTarget()
     {
 
-        int maxHealth = 0;
+        float maxHealth = 0;
         foreach (GameObject enemy in enemiesInRange)
         {
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
-            if (enemyBehavior.health > maxHealth)
+            float enemyHealth = enemyBehavior.health;
+
+            if (enemyHealth > maxHealth)
             {
-                laserTargetScript = enemyBehavior;
+                maxHealth = enemyHealth;
+                targetEnemy = enemy;
+                targetEnemyScript = enemyBehavior;
             }
         }
     }
 
     protected override void Attack()
     {
-        if(laserTargetScript == null)
+        if(targetEnemyScript == null)
         {
             UpdateTarget();
         }
         Debug.Log("Laser!");
-        laserTargetScript.DamageEnemy(damage);
+        targetEnemyScript.DamageEnemy(damage);
 
-        if (laserTargetScript.isDefeated)
+        if (targetEnemyScript.isDefeated)
         {
-            laserTargetScript = null;
+            targetEnemy = null;
+            targetEnemyScript = null;
         }
     }
+
+    protected override void RemoveEnemyInRange(GameObject enemy)
+    {
+        base.RemoveEnemyInRange(enemy);
+        if (enemy == targetEnemy)
+        {
+            UpdateTarget();
+        }
+    }
+
 
 }
