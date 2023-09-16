@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
 
-    [SerializeField] private float speed = 5f;
+    [SerializeField] protected float speed = 5f;
     public float health = 10f;
     public bool isDefeated = false;
 
@@ -32,7 +32,7 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    public void SlowSpeed(float slowStrength)
+    public virtual void SlowSpeed(float slowStrength)
     {
         speed /= (1+(slowStrength/100));
     }
@@ -42,7 +42,7 @@ public class EnemyBehavior : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
-    public void DamageEnemy(float damage)
+    public virtual void DamageEnemy(float damage)
     {
         health -= damage;
         if(health <= 0)

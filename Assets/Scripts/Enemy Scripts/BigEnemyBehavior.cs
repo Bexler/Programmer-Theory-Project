@@ -2,17 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigEnemyBehavior : MonoBehaviour
+public class BigEnemyBehavior : EnemyBehavior
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
+    //more health
+    //on death spawn smaller enemies
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

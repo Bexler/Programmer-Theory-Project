@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower Cube Red
       objectReference: {fileID: 0}
+    - target: {fileID: 3867922568809230990, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3867922568809230990, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7620339554357805050, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

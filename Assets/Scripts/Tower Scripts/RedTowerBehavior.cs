@@ -13,7 +13,6 @@ public class RedTowerBehavior : TowerBehavior
     {
         base.Start();
         attackFrequency = 5f;
-        UpdateTarget();
     }
 
     private void UpdateTarget()
@@ -32,15 +31,24 @@ public class RedTowerBehavior : TowerBehavior
                 targetEnemyScript = enemyBehavior;
             }
         }
+        if (maxHealth == 0)
+        {
+            Debug.Log("No enemy found!");
+        }
     }
 
     protected override void Attack()
     {
         if(targetEnemyScript == null)
         {
+            Debug.Log("Update Red Tower target!");
             UpdateTarget();
         }
         Debug.Log("Laser!");
+        if(targetEnemyScript == null)
+        {
+            Debug.LogError("Attacking nothing!");
+        }
         targetEnemyScript.DamageEnemy(damage);
 
         if (targetEnemyScript.isDefeated)

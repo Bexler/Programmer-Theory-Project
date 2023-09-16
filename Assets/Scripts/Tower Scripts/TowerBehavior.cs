@@ -98,7 +98,7 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         for(int i = 0; i < defeatedEnemies.Count; i++)
         {
-            enemiesInRange.Remove(defeatedEnemies[i]);
+            RemoveEnemyInRange(defeatedEnemies[i]);
         }
         defeatedEnemies.Clear();
     }

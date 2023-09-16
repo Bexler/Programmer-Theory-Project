@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SphereEnemyBehavior : MonoBehaviour
+public class SphereEnemyBehavior : EnemyBehavior
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
+    //switches damage and slow
+    //slows now deal damage to spheres
+    //damage now slows spheres
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
