@@ -6,8 +6,10 @@ public class EnemyBehavior : MonoBehaviour
 {
 
     [SerializeField] private float speed = 5f;
-    [SerializeField] private float health = 10f;
-    private bool isDefeated = false;
+    public float health = 10f;
+    public bool isDefeated = false;
+
+    //for testing purposes check tower targeting functionality
     public int towerTargetCount = 0;
 
     // Start is called before the first frame update

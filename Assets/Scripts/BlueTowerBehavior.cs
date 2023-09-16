@@ -6,6 +6,8 @@ using UnityEngine;
 public class BlueTowerBehavior : TowerBehavior
 {
 
+    private int damage = 1;
+
     protected override void Start()
     {
         base.Start();
@@ -18,7 +20,7 @@ public class BlueTowerBehavior : TowerBehavior
         foreach (GameObject enemy in enemiesInRange)
         {
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
-            enemyBehavior.DamageEnemy(1);
+            enemyBehavior.DamageEnemy(damage);
             
         }
         UpdateEnemiesInRange();
