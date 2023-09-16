@@ -34,7 +34,7 @@ public class CylinderEnemyBehavior : EnemyBehavior
 
     private void IncreaseSpeed(float speedMod)
     {
-        speed *= speedMod;
+        speed *= (1+speedMod);
     }
 
 }

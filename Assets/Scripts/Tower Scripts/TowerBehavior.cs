@@ -7,10 +7,13 @@ public abstract class TowerBehavior : MonoBehaviour
 {
 
     protected float range;
-    protected List<GameObject> enemiesInRange = new List<GameObject> ();
+    [SerializeField] protected List<GameObject> enemiesInRange = new List<GameObject> ();
     protected List<GameObject> defeatedEnemies = new List<GameObject> ();
+
     [SerializeField] private GameObject rangeIndicator;
     private bool isEnemyInRange = false;
+    private Coroutine attackRoutine;
+
     protected float attackFrequency { get; set; }
 
     private void OnEnable()
@@ -47,10 +50,11 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         while (isEnemyInRange)
         {
+            Debug.Log("I have been called to attack with frequency " + attackFrequency);
             Attack();
             yield return new WaitForSeconds(1/attackFrequency);
         }
-
+        attackRoutine = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -108,7 +112,15 @@ public abstract class TowerBehavior : MonoBehaviour
         if(enemiesInRange.Count == 1)
         {
             isEnemyInRange = true;
-            StartCoroutine(AttackRoutine());
+            StartAttacking();
+        }
+    }
+
+    private void StartAttacking()
+    {
+        if(attackRoutine == null)
+        {
+            attackRoutine = StartCoroutine(AttackRoutine());
         }
     }
 
