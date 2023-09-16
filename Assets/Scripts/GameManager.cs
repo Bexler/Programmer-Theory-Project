@@ -6,8 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField] private Vector3 spawnPosition;
-    [SerializeField] private GameObject spawnPrefab;
+    [SerializeField] private float spawnZPosition;
+    [SerializeField] private List<GameObject> spawnPrefabs;
     private float spawnFrequency = 1f;
 
     private int gold = 0;
@@ -43,13 +43,16 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(spawnFrequency);
-            SpawnEnemy();
+            SpawnRandomEnemy();
         }
     }
 
-    private void SpawnEnemy()
+    private void SpawnRandomEnemy()
     {
-        Instantiate(spawnPrefab, spawnPosition, spawnPrefab.transform.rotation);
+        int spawnIndex = Random.Range(0, spawnPrefabs.Count);
+        GameObject randomEnemyPrefab = spawnPrefabs[spawnIndex];
+        Vector3 spawnPosition = new Vector3(0, randomEnemyPrefab.transform.position.y, spawnZPosition);
+        Instantiate(randomEnemyPrefab, spawnPosition, randomEnemyPrefab.transform.rotation);
     }
 
     private void AddMoney(GameObject enemy)
