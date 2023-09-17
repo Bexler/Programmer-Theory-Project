@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     private int gold = 0;
     public float playerHealth = 10f;
+    private int score = 0;
 
     [SerializeField] private GameObject UIManager;
     private MainUIManager UIManagerScript;
@@ -62,7 +63,9 @@ public class GameManager : MonoBehaviour
 
     private void AddMoney(GameObject enemy)
     {
+        score++;
         gold++;
+        UIManagerScript.UpdateScoreText(score);
         UIManagerScript.UpdateGoldText(gold);
     }
 
