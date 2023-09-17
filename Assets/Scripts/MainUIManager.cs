@@ -10,6 +10,7 @@ public class MainUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private Slider playerHealthSlider;
+    [SerializeField] private GameObject gameOverPanel;
 
     private string playerName;
 
@@ -39,5 +40,10 @@ public class MainUIManager : MonoBehaviour
     public void UpdatePlayerHealthSlider(float health)
     {
         playerHealthSlider.value = health;
+    }
+
+    public void UpdateGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
     }
 }

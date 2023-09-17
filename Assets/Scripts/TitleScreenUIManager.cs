@@ -25,6 +25,10 @@ public class TitleScreenUIManager : MonoBehaviour
         MainManager.Instance.SetPlayerName(nameInputField.text);
     }
 
+    public void StartGame()
+    {
+        MainManager.Instance.StartGame();
+    }
 
 
 }

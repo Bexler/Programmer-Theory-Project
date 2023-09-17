@@ -38,10 +38,16 @@ public class MainManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+        Time.timeScale = 1;
     }
 
     public void SetPlayerName(string name)
     {
         playerName = name;
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

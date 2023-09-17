@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -69,6 +70,10 @@ public class GameManager : MonoBehaviour
     {
         playerHealth -= damage;
         UpdatePlayerHealthUI();
+        if(playerHealth < 0)
+        {
+            GameOver();
+        }
     }
 
     public void UpdatePlayerHealthUI()
@@ -79,5 +84,21 @@ public class GameManager : MonoBehaviour
     public void WaveStart()
     {
         Debug.Log("Start Wave!");
+    }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0;
+        UIManagerScript.UpdateGameOverPanel();
+    }
+
+    public void RestartGame()
+    {
+        MainManager.Instance.StartGame();
+    }
+
+    public void LoadMainMenu()
+    {
+        MainManager.Instance.MainMenu();
     }
 }
