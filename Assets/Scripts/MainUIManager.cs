@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class MainUIManager : MonoBehaviour
 {
 
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI goldText;   
+    [SerializeField] private TextMeshProUGUI goldText;
+    [SerializeField] private Slider playerHealthSlider;
 
     private string playerName;
 
@@ -26,11 +28,16 @@ public class MainUIManager : MonoBehaviour
 
     private void UpdateNameText()
     {
-        nameText.text = playerName;
+        nameText.text = "Player name: " + playerName;
     }
 
     public void UpdateGoldText(int gold)
     {
         goldText.text = "" + gold + 'g';
+    }
+
+    public void UpdatePlayerHealthSlider(float health)
+    {
+        playerHealthSlider.value = health;
     }
 }

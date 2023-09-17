@@ -50,7 +50,7 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         while (isEnemyInRange)
         {
-            Debug.Log("I have been called to attack with frequency " + attackFrequency);
+            //Debug.Log("I have been called to attack with frequency " + attackFrequency);
             Attack();
             yield return new WaitForSeconds(1/attackFrequency);
         }
@@ -64,7 +64,7 @@ public abstract class TowerBehavior : MonoBehaviour
             //for testing purposes show the amount of towers that the enemy is in range for
             other.GetComponent<EnemyBehavior>().towerTargetCount++;
 
-            Debug.Log("Found Enemy!");
+            //Debug.Log("Found Enemy!");
             AddEnemyInRange(other.gameObject);
         }
     }
@@ -76,7 +76,7 @@ public abstract class TowerBehavior : MonoBehaviour
             //for testing purposes show the amount of towers that the enemy is in range for
             other.GetComponent<EnemyBehavior>().towerTargetCount--;
 
-            Debug.Log("Lost Enemy!");
+            //Debug.Log("Lost Enemy!");
             RemoveEnemyInRange(other.gameObject);
         }
     }

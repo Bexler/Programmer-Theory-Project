@@ -9,6 +9,8 @@ public class EventManager : MonoBehaviour
 
     public event Action<GameObject> OnEnemyDeath;
 
+    public event Action<float> OnEnemySurvival;
+
     private void Awake()
     {
         if(Instance != null)
@@ -35,5 +37,11 @@ public class EventManager : MonoBehaviour
     public void EnemyDeath(GameObject enemy)
     {
         OnEnemyDeath?.Invoke(enemy);
+    }
+
+    public void EnemySurvival(float enemyHealth)
+    {
+
+        OnEnemySurvival?.Invoke(enemyHealth);
     }
 }

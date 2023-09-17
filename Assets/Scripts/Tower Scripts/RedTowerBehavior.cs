@@ -41,10 +41,10 @@ public class RedTowerBehavior : TowerBehavior
     {
         if(targetEnemyScript == null)
         {
-            Debug.Log("Update Red Tower target!");
+            //Debug.Log("Update Red Tower target!");
             UpdateTarget();
         }
-        Debug.Log("Laser!");
+        //Debug.Log("Laser!");
         if(targetEnemyScript == null)
         {
             Debug.LogError("Attacking nothing!");

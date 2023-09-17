@@ -16,7 +16,7 @@ public class BlueTowerBehavior : TowerBehavior
 
     protected override void Attack()
     {
-        Debug.Log("Attac!");
+        //Debug.Log("Attac!");
         foreach (GameObject enemy in enemiesInRange)
         {
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();

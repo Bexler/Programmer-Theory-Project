@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private float spawnFrequency = 1f;
 
     private int gold = 0;
+    public float playerHealth = 10f;
 
     [SerializeField] private GameObject UIManager;
     private MainUIManager UIManagerScript;
@@ -18,11 +19,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Instance.OnEnemyDeath += AddMoney;
+        EventManager.Instance.OnEnemySurvival += UpdatePlayerHealth;
     }
 
     private void OnDisable()
     {
         EventManager.Instance.OnEnemyDeath -= AddMoney;
+        EventManager.Instance.OnEnemySurvival -= UpdatePlayerHealth;
     }
 
     // Start is called before the first frame update
@@ -30,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(SpawnRoutine());
         UIManagerScript = UIManager.GetComponent<MainUIManager>();
+        UpdatePlayerHealthUI();
     }
 
     // Update is called once per frame
@@ -59,5 +63,21 @@ public class GameManager : MonoBehaviour
     {
         gold++;
         UIManagerScript.UpdateGoldText(gold);
+    }
+
+    public void UpdatePlayerHealth(float damage)
+    {
+        playerHealth -= damage;
+        UpdatePlayerHealthUI();
+    }
+
+    public void UpdatePlayerHealthUI()
+    {
+        UIManagerScript.UpdatePlayerHealthSlider(playerHealth);
+    }
+
+    public void WaveStart()
+    {
+        Debug.Log("Start Wave!");
     }
 }
