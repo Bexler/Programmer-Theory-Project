@@ -63,7 +63,11 @@ public class RedTowerBehavior : TowerBehavior
         base.RemoveEnemyInRange(enemy);
         if (enemy == targetEnemy)
         {
-            UpdateTarget();
+            targetEnemy = null;
+            if (isEnemyInRange)
+            {
+                UpdateTarget();
+            }
         }
     }
 

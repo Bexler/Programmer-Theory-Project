@@ -13,6 +13,7 @@ public class CylinderEnemyBehavior : EnemyBehavior
     protected override void Start()
     {
         base.Start();
+        health = 10;
         baseHealth = health;
     }
 

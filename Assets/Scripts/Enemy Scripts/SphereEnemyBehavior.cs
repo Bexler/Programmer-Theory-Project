@@ -9,6 +9,12 @@ public class SphereEnemyBehavior : EnemyBehavior
     //slows now deal damage to spheres
     //damage now slows spheres
 
+    protected override void Start()
+    {
+        base.Start();
+        health = 10;
+    }
+
     public override void DamageEnemy(float damage)
     {
         base.SlowSpeed(damage);

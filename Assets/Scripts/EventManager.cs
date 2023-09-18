@@ -38,17 +38,19 @@ public class EventManager : MonoBehaviour
 
     public void EnemyDeath(GameObject enemy)
     {
+        Debug.Log("Enemy Death!");
         OnEnemyDeath?.Invoke(enemy);
     }
 
     public void EnemySurvival(float enemyHealth)
     {
-
+        Debug.Log("Enemy Survival!");
         OnEnemySurvival?.Invoke(enemyHealth);
     }
 
     public void EnemySpawn()
     {
+        Debug.Log("Enemy Spawn!");
         OnEnemySpawn?.Invoke();
     }
 }

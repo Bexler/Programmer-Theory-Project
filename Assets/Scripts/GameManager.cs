@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(0, 0, spawnZPosition);
 
-        StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, 3, 1));
+        StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, wave, 1));
         //StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
         
     }

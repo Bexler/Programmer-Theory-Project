@@ -11,7 +11,7 @@ public abstract class TowerBehavior : MonoBehaviour
     protected List<GameObject> defeatedEnemies = new List<GameObject> ();
 
     [SerializeField] private GameObject rangeIndicator;
-    private bool isEnemyInRange = false;
+    protected bool isEnemyInRange = false;
     private Coroutine attackRoutine;
 
     protected float attackFrequency { get; set; }
@@ -86,7 +86,10 @@ public abstract class TowerBehavior : MonoBehaviour
 
     private void AddEnemyInRange(GameObject enemy)
     {
-        enemiesInRange.Add(enemy);
+        if (!enemiesInRange.Contains(enemy))
+        {
+            enemiesInRange.Add(enemy);
+        }
         CheckFirstEnemyInRange();
     }
 
@@ -108,13 +111,9 @@ public abstract class TowerBehavior : MonoBehaviour
         foreach (Collider col in colliders)
         {
             // Check if the collider belongs to an object you want to detect
-            if (col.CompareTag("Enemy"))
+            if (col.CompareTag("Enemy") && !enemiesInRange.Contains(col.gameObject) && !col.GetComponent<EnemyBehavior>().isDefeated)
             {
-                // Do something when a collision is detected
-                if (!enemiesInRange.Contains(col.gameObject))
-                {
-                    enemiesInRange.Add(col.gameObject);
-                }
+                enemiesInRange.Add(col.gameObject);
             }
         }
     }

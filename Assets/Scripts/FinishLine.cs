@@ -9,6 +9,7 @@ public class FinishLine : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Finsh line touchu!");
         if (other.CompareTag("Enemy"))
         {
             
