@@ -7,6 +7,7 @@ public class TitleScreenUIManager : MonoBehaviour
 {
 
     [SerializeField] private TMP_InputField nameInputField;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -30,5 +31,9 @@ public class TitleScreenUIManager : MonoBehaviour
         MainManager.Instance.StartGame();
     }
 
+    public void QuitGame()
+    {
+        MainManager.Instance.QuitGame();
+    }
 
 }

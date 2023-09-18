@@ -11,7 +11,7 @@ public class EventManager : MonoBehaviour
 
     public event Action<float> OnEnemySurvival;
 
-    public event Action<Vector3> OnSpawnAdds;
+    public event Action OnEnemySpawn;
 
     private void Awake()
     {
@@ -47,8 +47,8 @@ public class EventManager : MonoBehaviour
         OnEnemySurvival?.Invoke(enemyHealth);
     }
 
-    public void SpawnAdds(Vector3 spawnPos)
+    public void EnemySpawn()
     {
-        OnSpawnAdds?.Invoke(spawnPos);
+        OnEnemySpawn?.Invoke();
     }
 }

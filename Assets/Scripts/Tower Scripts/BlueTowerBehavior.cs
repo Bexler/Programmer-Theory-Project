@@ -23,7 +23,7 @@ public class BlueTowerBehavior : TowerBehavior
             enemyBehavior.DamageEnemy(damage);
             
         }
-        UpdateEnemiesInRange();
+        RemoveDefeatedEnemiesInRange();
         
     }
 

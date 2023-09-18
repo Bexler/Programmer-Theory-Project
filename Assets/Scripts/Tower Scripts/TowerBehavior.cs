@@ -19,16 +19,19 @@ public abstract class TowerBehavior : MonoBehaviour
     private void OnEnable()
     {
         EventManager.Instance.OnEnemyDeath += AddDefeatedEnemy;
+        EventManager.Instance.OnEnemySpawn += UpdateEnemiesInRange;
     }
 
     private void OnDisable()
     {
         EventManager.Instance.OnEnemyDeath -= AddDefeatedEnemy;
+        EventManager.Instance.OnEnemySpawn -= UpdateEnemiesInRange;
     }
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        range = GetComponent<SphereCollider>().radius;
         DisableRangeIndicator();
     }
 
@@ -42,7 +45,7 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         if(defeatedEnemies.Count > 0)
         {
-            UpdateEnemiesInRange();
+            RemoveDefeatedEnemiesInRange();
         }
     }
 
@@ -98,7 +101,25 @@ public abstract class TowerBehavior : MonoBehaviour
         defeatedEnemies.Add(enemy);
     }
 
-    protected void UpdateEnemiesInRange()
+    private void UpdateEnemiesInRange()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, range);
+
+        foreach (Collider col in colliders)
+        {
+            // Check if the collider belongs to an object you want to detect
+            if (col.CompareTag("Enemy"))
+            {
+                // Do something when a collision is detected
+                if (!enemiesInRange.Contains(col.gameObject))
+                {
+                    enemiesInRange.Add(col.gameObject);
+                }
+            }
+        }
+    }
+
+    protected void RemoveDefeatedEnemiesInRange()
     {
         for(int i = 0; i < defeatedEnemies.Count; i++)
         {

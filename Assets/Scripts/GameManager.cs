@@ -22,16 +22,14 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.Instance.OnEnemyDeath += AddMoney;
+        EventManager.Instance.OnEnemyDeath += EnemyDeathReaction;
         EventManager.Instance.OnEnemySurvival += UpdatePlayerHealth;
-        EventManager.Instance.OnSpawnAdds += SpawnAdds;
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.OnEnemyDeath -= AddMoney;
+        EventManager.Instance.OnEnemyDeath -= EnemyDeathReaction;
         EventManager.Instance.OnEnemySurvival -= UpdatePlayerHealth;
-        EventManager.Instance.OnSpawnAdds -= SpawnAdds;
     }
 
     // Start is called before the first frame update
@@ -98,6 +96,7 @@ public class GameManager : MonoBehaviour
     private void SpawnEnemy(GameObject enemy, Vector3 spawnPos)
     {
         Instantiate(enemy, spawnPos, enemy.transform.rotation);
+        EventManager.Instance.EnemySpawn();
     }
 
     public void SpawnEnemies(GameObject enemy, Vector3 spawnPos, int amount, float frequency)
@@ -116,7 +115,7 @@ public class GameManager : MonoBehaviour
         GameObject randomEnemyPrefab = spawnPrefabs[spawnIndex];
         Vector3 spawnPosition = new Vector3(0, randomEnemyPrefab.transform.position.y, spawnZPosition);
 
-        Instantiate(randomEnemyPrefab, spawnPosition, randomEnemyPrefab.transform.rotation);
+        SpawnEnemy(randomEnemyPrefab, spawnPosition);
     }
 
     private void SpawnRandomEnemy(List<GameObject> enemyList, Vector3 spawnPos)
@@ -125,7 +124,17 @@ public class GameManager : MonoBehaviour
         GameObject randomEnemyPrefab = enemyList[spawnIndex];
         Vector3 spawnPosition = new Vector3(spawnPos.x, randomEnemyPrefab.transform.position.y, spawnPos.z);
 
-        Instantiate(randomEnemyPrefab, spawnPosition, randomEnemyPrefab.transform.rotation);
+        SpawnEnemy(randomEnemyPrefab, spawnPosition);
+    }
+
+    private void EnemyDeathReaction(GameObject enemy)
+    {
+        if(enemy.GetComponent<EnemyBehavior>().baseSpeed == 3)
+        {
+            Debug.Log("Found slow and big!");
+            SpawnAdds(enemy.transform.position);
+        }
+        AddMoney(enemy);
     }
 
     private void AddMoney(GameObject enemy)
@@ -140,7 +149,7 @@ public class GameManager : MonoBehaviour
     {
         playerHealth -= damage;
         UpdatePlayerHealthUI();
-        if(playerHealth < 0)
+        if(playerHealth <= 0)
         {
             GameOver();
         }
@@ -178,7 +187,9 @@ public class GameManager : MonoBehaviour
         UIManagerScript.UpdateWaveText(wave);
 
         Vector3 spawnPosition = new Vector3(0, 0, spawnZPosition);
-        StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
+
+        StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, 3, 1));
+        //StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
         
     }
 }

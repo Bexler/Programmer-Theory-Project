@@ -15,14 +15,7 @@ public class BigEnemyBehavior : EnemyBehavior
         baseSpeed = speed;
     }
 
-    public override void DamageEnemy(float damage)
-    {
-        base.DamageEnemy(damage);
-        if (isDefeated)
-        {
-            EventManager.Instance.SpawnAdds(transform.position);
-        }
-    }
+    //Add spawn logic is in GameManager for now
 
 
 }

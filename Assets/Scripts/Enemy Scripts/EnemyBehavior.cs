@@ -6,7 +6,7 @@ public class EnemyBehavior : MonoBehaviour
 {
 
     [SerializeField] protected float speed = 5f;
-    protected float baseSpeed;
+    public float baseSpeed;
     public float health = 10f;
     public bool isDefeated = false;
 
@@ -22,15 +22,16 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isDefeated)
+        {
+            Destroy(gameObject);
+        }
         Move();
     }
 
     private void LateUpdate()
     {
-        if (isDefeated)
-        {
-            Destroy(gameObject);
-        }
+        
     }
 
     public virtual void SlowSpeed(float slowStrength)

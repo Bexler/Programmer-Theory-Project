@@ -35,7 +35,7 @@ public class MainUIManager : MonoBehaviour
 
     private void UpdateNameText()
     {
-        nameText.text = "Player name: " + playerName;
+        nameText.text = "Player: " + playerName;
     }
 
     public void UpdateGoldText(int gold)
