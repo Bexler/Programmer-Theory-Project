@@ -1408,7 +1408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.97
+      value: 3.55
       objectReference: {fileID: 0}
     - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1416,7 +1416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.32
+      value: -9.98
       objectReference: {fileID: 0}
     - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1947,6 +1947,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732679580}
   m_CullTransparentMesh: 1
+--- !u!1001 &927893296
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4298229763567944716, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_Name
+      value: Tower Cube Blue (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 12.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686981206296699623, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
 --- !u!1001 &1366917471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1973,7 +2034,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4936270055975272143, guid: fbed6396e95c2ec4bb91a20f778199be, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3
+      value: 5.72
       objectReference: {fileID: 0}
     - target: {fileID: 4936270055975272143, guid: fbed6396e95c2ec4bb91a20f778199be, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3571,6 +3632,7 @@ MonoBehaviour:
   - {fileID: 1963674252756067433, guid: e6513f1b15c11bb4697aada2dce105be, type: 3}
   - {fileID: 7879193499360049900, guid: 7ca1c50d9e262de4e91439f2dfd9278e, type: 3}
   - {fileID: 4196077961545423840, guid: 0bcedb845d02a574da8e60fb5edb5093, type: 3}
+  towerPrefabs: []
   addPrefab: {fileID: 2990128699641779588, guid: 17692a43ba1562d4b8975c08d39a7fff, type: 3}
   playerHealth: 10
   UIManager: {fileID: 1893245604}

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private float spawnZPosition;
     [SerializeField] private List<GameObject> spawnPrefabs;
+    [SerializeField] private List<GameObject> towerPrefabs;
     [SerializeField] private GameObject addPrefab;
     private float spawnFrequency = 1f;
 
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     public float playerHealth = 10f;
     private int score = 0;
     private int wave = 0;
+    private int deposit = 0;
+    private bool isBuilding;
 
     [SerializeField] private GameObject UIManager;
     private MainUIManager UIManagerScript;
@@ -43,7 +46,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isBuilding)
+        {
+            //Update position of tower being built accordingly here
+        }
     }
 
 
@@ -191,5 +197,41 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, wave, 1));
         //StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
         
+    }
+
+    public void BuyTower(int cost)
+    {
+        if (gold > cost)
+        {
+            deposit = cost;
+            gold -= cost;
+            isBuilding = true;
+            if (cost == 10)
+            {
+                GameObject towerToBuild = GetTowerByCost(cost);
+                BuildTower(towerToBuild);
+            }
+        }
+    }
+
+    private void BuildTower(GameObject selectedTower)
+    {
+        //Initiate tower but set it to inactive -> access towerBehavior and implement logic
+        //Update position of tower every frame ScreenToWorldPoint or Raycast
+        //On second click place tower or error if collision with tower or floor
+    }
+
+    private GameObject GetTowerByCost(int cost)
+    {
+        if(cost == 10)
+        {
+            return spawnPrefabs[0];
+        }
+        if(cost == 15)
+        {
+            return spawnPrefabs[1];
+        }
+
+        return spawnPrefabs[2];
     }
 }
