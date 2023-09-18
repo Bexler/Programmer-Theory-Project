@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GreenTowerBehavior : TowerBehavior
 {
-    private float slowStrength = 5;
+    private float slowStrength = 0.5f;
 
 
     protected override void Start()

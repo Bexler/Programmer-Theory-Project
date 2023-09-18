@@ -6,6 +6,7 @@ public class EnemyBehavior : MonoBehaviour
 {
 
     [SerializeField] protected float speed = 5f;
+    protected float baseSpeed;
     public float health = 10f;
     public bool isDefeated = false;
 
@@ -13,9 +14,9 @@ public class EnemyBehavior : MonoBehaviour
     public int towerTargetCount = 0;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        
+        baseSpeed = speed;
     }
 
     // Update is called once per frame
@@ -34,7 +35,15 @@ public class EnemyBehavior : MonoBehaviour
 
     public virtual void SlowSpeed(float slowStrength)
     {
-        speed /= (1+(slowStrength/100));
+        if(speed > baseSpeed / 2)
+        {
+            speed /= (1 + (slowStrength / 10));
+        }
+        if(speed < baseSpeed / 2)
+        {
+            speed = baseSpeed / 2;
+        }
+        
     }
 
     private void Move()
