@@ -3237,6 +3237,7 @@ MonoBehaviour:
   - {fileID: 1963674252756067433, guid: e6513f1b15c11bb4697aada2dce105be, type: 3}
   - {fileID: 7879193499360049900, guid: 7ca1c50d9e262de4e91439f2dfd9278e, type: 3}
   - {fileID: 4196077961545423840, guid: 0bcedb845d02a574da8e60fb5edb5093, type: 3}
+  addPrefab: {fileID: 2990128699641779588, guid: 17692a43ba1562d4b8975c08d39a7fff, type: 3}
   playerHealth: 10
   UIManager: {fileID: 1893245604}
 --- !u!4 &2133309459

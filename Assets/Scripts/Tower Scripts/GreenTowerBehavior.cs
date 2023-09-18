@@ -15,7 +15,7 @@ public class GreenTowerBehavior : TowerBehavior
 
     protected override void Attack()
     {
-        Debug.Log("Slow!");
+        //Debug.Log("Slow!");
         foreach (GameObject enemy in enemiesInRange)
         {
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
