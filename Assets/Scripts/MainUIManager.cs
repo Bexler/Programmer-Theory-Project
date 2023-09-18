@@ -12,8 +12,10 @@ public class MainUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI gameOverScoreText;
+    [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private Slider playerHealthSlider;
     [SerializeField] private GameObject gameOverPanel;
+    
 
     private string playerName;
 
@@ -57,8 +59,14 @@ public class MainUIManager : MonoBehaviour
         UpdateGameOverScoreText();
     }
 
+    public void UpdateWaveText(int wave)
+    {
+        waveText.text = "Wave: " + wave;
+    }
+
     private void UpdateGameOverScoreText()
     {
         gameOverScoreText.text = "Your " + scoreText.text;
     }
+
 }

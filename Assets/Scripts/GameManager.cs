@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private int gold = 0;
     public float playerHealth = 10f;
     private int score = 0;
+    private int wave = 0;
 
     [SerializeField] private GameObject UIManager;
     private MainUIManager UIManagerScript;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        //StartCoroutine(SpawnRoutine());
         UIManagerScript = UIManager.GetComponent<MainUIManager>();
         UpdatePlayerHealthUI();
     }
@@ -54,9 +55,11 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(spawnFrequency);
             SpawnRandomEnemy();
+            StartCoroutine(SpawnRoutine(spawnPrefabs, Vector3.zero, 5, spawnFrequency));
         }
     }
 
+    //spawn each element of a list once at spawnPos in frequency based delay between element spawns
     IEnumerator SpawnRoutine(List<GameObject> enemyList, Vector3 spawnPos, float frequency)
     {
         foreach (GameObject enemy in enemyList)
@@ -66,15 +69,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnRoutine(List<GameObject> enemyList, Vector3 spawnPos, int amount, float frequency)
+    //spawn random elements of a list at spawnPos for amount of times in frequency 
+    IEnumerator SpawnRoutine(List<GameObject> randomEnemyList, Vector3 spawnPos, int amount, float frequency) 
     {
         for(int i = 0; i < amount; i++)
         {
-            SpawnRandomEnemy(enemyList, spawnPos);
+            SpawnRandomEnemy(randomEnemyList, spawnPos);
             yield return new WaitForSeconds(frequency);
         }
     }
 
+    //spawn specific gameObject at spawnPos for amount of times in frequency 
     IEnumerator SpawnRoutine(GameObject enemy, Vector3 spawnPos, int amount, float frequency)
     {
         for(int i = 0; i < amount; i++)
@@ -110,6 +115,7 @@ public class GameManager : MonoBehaviour
         int spawnIndex = Random.Range(0, spawnPrefabs.Count);
         GameObject randomEnemyPrefab = spawnPrefabs[spawnIndex];
         Vector3 spawnPosition = new Vector3(0, randomEnemyPrefab.transform.position.y, spawnZPosition);
+
         Instantiate(randomEnemyPrefab, spawnPosition, randomEnemyPrefab.transform.rotation);
     }
 
@@ -117,7 +123,9 @@ public class GameManager : MonoBehaviour
     {
         int spawnIndex = Random.Range(0, enemyList.Count);
         GameObject randomEnemyPrefab = enemyList[spawnIndex];
-        Instantiate(randomEnemyPrefab, spawnPos, randomEnemyPrefab.transform.rotation);
+        Vector3 spawnPosition = new Vector3(spawnPos.x, randomEnemyPrefab.transform.position.y, spawnPos.z);
+
+        Instantiate(randomEnemyPrefab, spawnPosition, randomEnemyPrefab.transform.rotation);
     }
 
     private void AddMoney(GameObject enemy)
@@ -166,7 +174,11 @@ public class GameManager : MonoBehaviour
 
     public void SpawnNextWave()
     {
+        wave++;
+        UIManagerScript.UpdateWaveText(wave);
+
         Vector3 spawnPosition = new Vector3(0, 0, spawnZPosition);
         StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
+        
     }
 }
