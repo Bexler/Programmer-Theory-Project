@@ -64,6 +64,7 @@ public class RedTowerBehavior : TowerBehavior
         if (enemy == targetEnemy)
         {
             targetEnemy = null;
+            targetEnemyScript = null;
             if (isEnemyInRange)
             {
                 UpdateTarget();

@@ -13,6 +13,7 @@ public abstract class TowerBehavior : MonoBehaviour
     [SerializeField] private GameObject rangeIndicator;
     protected bool isEnemyInRange = false;
     private Coroutine attackRoutine;
+    private bool isNewEnemySpawned = false;
 
     protected float attackFrequency { get; set; }
 
@@ -46,6 +47,10 @@ public abstract class TowerBehavior : MonoBehaviour
         if(defeatedEnemies.Count > 0)
         {
             RemoveDefeatedEnemiesInRange();
+        }
+        if (isNewEnemySpawned)
+        {
+            AddEnemiesInRange();
         }
     }
 
@@ -104,7 +109,7 @@ public abstract class TowerBehavior : MonoBehaviour
         defeatedEnemies.Add(enemy);
     }
 
-    private void UpdateEnemiesInRange()
+    private void AddEnemiesInRange()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, range);
 
@@ -116,6 +121,13 @@ public abstract class TowerBehavior : MonoBehaviour
                 enemiesInRange.Add(col.gameObject);
             }
         }
+        isNewEnemySpawned = false;
+    }
+
+    private void UpdateEnemiesInRange()
+    {
+        isNewEnemySpawned = true;
+        
     }
 
     protected void RemoveDefeatedEnemiesInRange()
@@ -149,6 +161,7 @@ public abstract class TowerBehavior : MonoBehaviour
         if(enemiesInRange.Count == 0)
         {
             isEnemyInRange = false;
+            //StopCoroutine(AttackRoutine());
         }
     }
 
