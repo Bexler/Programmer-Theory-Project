@@ -130,9 +130,10 @@ public class GameManager : MonoBehaviour
     //The final and only method that instantiates enemies
     private void SpawnEnemy(GameObject enemy, Vector3 spawnPos)
     {
-        Instantiate(enemy, spawnPos, enemy.transform.rotation);
+        GameObject spawnedEnemy = Instantiate(enemy, spawnPos, enemy.transform.rotation);
         EventManager.Instance.EnemySpawn();
         enemiesAlive++;
+        spawnedEnemy.GetComponent<EnemyBehavior>().SetSpawnedWave(wave); 
     }
 
     //Method for spawning a single enemy multiple times
@@ -237,11 +238,25 @@ public class GameManager : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(0, 0, spawnZPosition);
 
-        WaveTemplate currentWaveData = waveData[wave]; 
+        WaveTemplate currentWaveData = waveData[wave];
 
-        foreach(WaveIndividual enemyType in currentWaveData.enemies)
+        if (currentWaveData.isRandom)
         {
-            StartCoroutine(SpawnRoutine(enemyType.enemyPrefab, spawnPosition, enemyType.numberOfSpawns, enemyType.spawnFrequency));
+            List<GameObject> enemyTypes = new List<GameObject>();
+            foreach (WaveIndividual enemyType in currentWaveData.enemies)
+            {
+                enemyTypes.Add(enemyType.enemyPrefab);
+            }
+            WaveIndividual infoEnemy = currentWaveData.enemies[0];
+
+            StartCoroutine(SpawnRoutine(enemyTypes, spawnPosition, infoEnemy.numberOfSpawns, infoEnemy.spawnFrequency));
+
+        } else
+        {
+            foreach (WaveIndividual enemyType in currentWaveData.enemies)
+            {
+                StartCoroutine(SpawnRoutine(enemyType.enemyPrefab, spawnPosition, enemyType.numberOfSpawns, enemyType.spawnFrequency));
+            }
         }
 
         wave++;

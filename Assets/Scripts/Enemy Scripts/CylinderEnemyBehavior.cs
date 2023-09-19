@@ -12,9 +12,10 @@ public class CylinderEnemyBehavior : EnemyBehavior
 
     protected override void Start()
     {
-        base.Start();
-        health = 10;
+        health = 10 + (2 * waveWhenSpawned);
         baseHealth = health;
+        speed = 5f * (1 + (waveWhenSpawned / 100) * 5);
+        baseSpeed = speed;
     }
 
     public override void SlowSpeed(float slowStrength)

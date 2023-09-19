@@ -11,8 +11,10 @@ public class SphereEnemyBehavior : EnemyBehavior
 
     protected override void Start()
     {
-        base.Start();
-        health = 10;
+        
+        health = 10 + (2 * waveWhenSpawned);
+        speed = 5 * (1 + (waveWhenSpawned / 100) * 5);
+        baseSpeed = speed;
     }
 
     public override void DamageEnemy(float damage)

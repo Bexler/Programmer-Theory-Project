@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf924ef6b664a8429baaace27c6165b, type: 3}
   m_Name: Wave03_Individual01
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2990128699641779588, guid: 17692a43ba1562d4b8975c08d39a7fff, type: 3}
+  enemyPrefab: {fileID: 4916975588579551070, guid: febe0c7159c23a348aacaf1b14961b38, type: 3}
   numberOfSpawns: 5
   spawnFrequency: 1

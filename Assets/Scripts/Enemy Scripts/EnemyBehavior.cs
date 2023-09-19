@@ -5,10 +5,11 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
 
-    [SerializeField] protected float speed = 5f;
+    protected float speed;
     public float baseSpeed;
     public float health = 5f;
     public bool isDefeated = false;
+    protected int waveWhenSpawned;
 
     //for testing purposes check tower targeting functionality
     public int towerTargetCount = 0;
@@ -16,7 +17,7 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        baseSpeed = speed;
+
     }
 
     // Update is called once per frame
@@ -60,5 +61,10 @@ public class EnemyBehavior : MonoBehaviour
             isDefeated = true;
             EventManager.Instance.EnemyDeath(gameObject);
         }
+    }
+
+    public void SetSpawnedWave(int wave)
+    {
+        waveWhenSpawned = wave;
     }
 }

@@ -4479,7 +4479,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 260c2c8000b3e8d478355ef9c778ffc0, type: 2}
   - {fileID: 11400000, guid: ceb6e3411cad15b42aa6813c7660675b, type: 2}
   - {fileID: 11400000, guid: 6ed9863a6d441c346a4d738f6ae964e1, type: 2}
-  addPrefab: {fileID: 2990128699641779588, guid: 17692a43ba1562d4b8975c08d39a7fff, type: 3}
+  - {fileID: 11400000, guid: 26653af26c6946149bfa76254f27c967, type: 2}
+  - {fileID: 11400000, guid: 835bf039370a13c42ab84ad49570fc10, type: 2}
+  addPrefab: {fileID: 4916975588579551070, guid: febe0c7159c23a348aacaf1b14961b38, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
