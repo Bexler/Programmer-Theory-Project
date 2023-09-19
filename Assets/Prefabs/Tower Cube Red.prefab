@@ -30,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.68
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d295beba7072b4889c13baa6269bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesInRange: []
   rangeIndicator: {fileID: 2708842547716550598}
   targetEnemy: {fileID: 0}
 --- !u!1 &2708842547716550598 stripped

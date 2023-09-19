@@ -3532,7 +3532,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829773379}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.001, z: 0.96}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4178,6 +4178,8 @@ MonoBehaviour:
   - {fileID: 4298229763567944716, guid: 8b1f0473e17bba748ae0ecdeaa06077a, type: 3}
   - {fileID: 1552302516398200868, guid: fbed6396e95c2ec4bb91a20f778199be, type: 3}
   - {fileID: 2342206464303903963, guid: bd4a63ff874e2a54cabf9efb4b703b36, type: 3}
+  waveData:
+  - {fileID: 11400000, guid: 260c2c8000b3e8d478355ef9c778ffc0, type: 2}
   addPrefab: {fileID: 2990128699641779588, guid: 17692a43ba1562d4b8975c08d39a7fff, type: 3}
   groundLayer:
     serializedVersion: 2

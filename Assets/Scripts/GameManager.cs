@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float spawnZPosition;
     [SerializeField] private List<GameObject> spawnPrefabs;
     [SerializeField] private List<GameObject> towerPrefabs;
+    [SerializeField] private List<WaveTemplate> waveData;
     [SerializeField] private GameObject addPrefab;
     [SerializeField] private LayerMask groundLayer;
     private float spawnFrequency = 1f;
@@ -52,15 +53,15 @@ public class GameManager : MonoBehaviour
         if (isBuilding)
         {
             Vector3 towerPos = GetMousePositionRay();
-            if(towerPos != Vector3.zero)
+            if(towerPos != Vector3.zero && towerPos.y >= 0.5f)
             {
-                selectedTower.transform.position = GetMousePositionRay();
+                Vector3 adjustedPos = new Vector3(towerPos.x, towerPos.y + 0.5f, towerPos.z);
+                selectedTower.transform.position = adjustedPos;
                 if (Input.GetMouseButtonDown(0))
                 {
                     PlaceTower();
                 }
             }
-            
         }
     }
 
@@ -201,14 +202,20 @@ public class GameManager : MonoBehaviour
 
     public void SpawnNextWave()
     {
-        wave++;
-        UIManagerScript.UpdateWaveText(wave);
+        UIManagerScript.UpdateWaveText(wave + 1);
 
         Vector3 spawnPosition = new Vector3(0, 0, spawnZPosition);
+        WaveTemplate currentWaveData = waveData[0]; //change waveData[0] to appropriate number when more waves are created
 
-        StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, wave, 1));
+        foreach(WaveIndividual enemyType in currentWaveData.enemies)
+        {
+            StartCoroutine(SpawnRoutine(enemyType.enemyPrefab, spawnPosition, enemyType.numberOfSpawns, enemyType.spawnFrequency));
+        }
+
+        //StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, wave, 1));
         //StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
-        
+        wave++;
+
     }
 
     public void BuyTower(int cost)

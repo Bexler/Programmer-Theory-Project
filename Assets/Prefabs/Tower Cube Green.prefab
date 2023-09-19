@@ -58,15 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.26
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8535868396660563617, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -127,4 +127,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f175885f49535434197d5a12dd00756f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemiesInRange: []
   rangeIndicator: {fileID: 1196953944722686777}
