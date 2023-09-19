@@ -4,27 +4,38 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+/* 
+ * The GameManager class is the class of a GameManger object that is present in the main scene
+ * The GameManager handles spawning enemies, building towers and updating the state of player or game
+ * There should never be more than 1 GameManager object or script active at the same time
+ */
 public class GameManager : MonoBehaviour
 {
 
+    //editor fields
     [SerializeField] private float spawnZPosition;
     [SerializeField] private List<GameObject> spawnPrefabs;
     [SerializeField] private List<GameObject> towerPrefabs;
     [SerializeField] private List<WaveTemplate> waveData;
     [SerializeField] private GameObject addPrefab;
     [SerializeField] private LayerMask groundLayer;
-    private float spawnFrequency = 1f;
+    [SerializeField] private GameObject uiManager;
 
-    private int gold = 100;
-    public float playerHealth = 10f;
+    //private fields
+    private MainUIManager uiManagerScript;
+    private int gold = 50;
     private int score = 0;
     private int wave = 0;
     private int deposit = 0;
     private bool isBuilding;
     private GameObject selectedTower;
+    private float towerHeight = 0.5f;
+    private int goldPerEnemy = 5;
 
-    [SerializeField] private GameObject UIManager;
-    private MainUIManager UIManagerScript;
+    //public variables
+    public float playerHealth = 10f;
+
 
     private void OnEnable()
     {
@@ -41,21 +52,24 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //StartCoroutine(SpawnRoutine());
-        UIManagerScript = UIManager.GetComponent<MainUIManager>();
+
+        uiManagerScript = uiManager.GetComponent<MainUIManager>();
         UpdatePlayerHealthUI();
-        UIManagerScript.UpdateGoldText(gold);
+        UpdateGoldTextUI(gold);
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (isBuilding)
         {
             Vector3 towerPos = GetMousePositionRay();
-            if(towerPos != Vector3.zero && towerPos.y >= 0.5f)
+
+            if(towerPos != Vector3.zero && towerPos.y >= towerHeight)
             {
-                Vector3 adjustedPos = new Vector3(towerPos.x, towerPos.y + 0.5f, towerPos.z);
+                Vector3 adjustedPos = new Vector3(towerPos.x, towerPos.y + towerHeight, towerPos.z);
+
                 selectedTower.transform.position = adjustedPos;
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -65,16 +79,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    IEnumerator SpawnRoutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(spawnFrequency);
-            SpawnRandomEnemy();
-            StartCoroutine(SpawnRoutine(spawnPrefabs, Vector3.zero, 5, spawnFrequency));
-        }
-    }
 
     //spawn each element of a list once at spawnPos in frequency based delay between element spawns
     IEnumerator SpawnRoutine(List<GameObject> enemyList, Vector3 spawnPos, float frequency)
@@ -106,37 +110,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Spawn adds when big enemies get defeated
     private void SpawnAdds(Vector3 spawnPos)
     {
         Debug.Log("Start Spawning Adds!");
-        StartCoroutine(SpawnRoutine(addPrefab, spawnPos, 2, 0.5f));
+        float addSpawnFrequency = 0.5f;
+        int amountOfAdds = 2;
+        StartCoroutine(SpawnRoutine(addPrefab, spawnPos, amountOfAdds, addSpawnFrequency));
     }
 
+    //The final and only method that instantiates enemies
     private void SpawnEnemy(GameObject enemy, Vector3 spawnPos)
     {
         Instantiate(enemy, spawnPos, enemy.transform.rotation);
         EventManager.Instance.EnemySpawn();
     }
 
+    //Method for spawning a single enemy multiple times
     public void SpawnEnemies(GameObject enemy, Vector3 spawnPos, int amount, float frequency)
     {
         StartCoroutine(SpawnRoutine(enemy, spawnPos, amount, frequency));
     }
 
+    //Method for spawning each enemy of a list for a single time
     public void SpawnEnemies(List<GameObject> enemyList, Vector3 spawnPos, float frequency)
     {
         StartCoroutine(SpawnRoutine(enemyList, spawnPos, frequency));   
     }
 
-    private void SpawnRandomEnemy()
+    //Method for spawning random enemies of a list multiple times
+    public void SpawnEnemies(List<GameObject> enemyList, Vector3 spawnPos, int amount, float frequency)
     {
-        int spawnIndex = Random.Range(0, spawnPrefabs.Count);
-        GameObject randomEnemyPrefab = spawnPrefabs[spawnIndex];
-        Vector3 spawnPosition = new Vector3(0, randomEnemyPrefab.transform.position.y, spawnZPosition);
-
-        SpawnEnemy(randomEnemyPrefab, spawnPosition);
+        StartCoroutine(SpawnRoutine(enemyList, spawnPos, amount, frequency));
     }
 
+    //Method for spawning a single random enemy from a list
     private void SpawnRandomEnemy(List<GameObject> enemyList, Vector3 spawnPos)
     {
         int spawnIndex = Random.Range(0, enemyList.Count);
@@ -146,22 +154,29 @@ public class GameManager : MonoBehaviour
         SpawnEnemy(randomEnemyPrefab, spawnPosition);
     }
 
+    //Method that is bound to the OnEnemyDeath event that checks if defeated enemy spawns adds
     private void EnemyDeathReaction(GameObject enemy)
     {
         if(enemy.GetComponent<EnemyBehavior>().baseSpeed == 3)
         {
-            Debug.Log("Found slow and big!");
+            //Debug.Log("Found slow and big!");
             SpawnAdds(enemy.transform.position);
         }
         AddMoney(enemy);
     }
 
+    //Update variables and UI after enemy defeat
     private void AddMoney(GameObject enemy)
     {
         score++;
-        gold++;
-        UIManagerScript.UpdateScoreText(score);
-        UIManagerScript.UpdateGoldText(gold);
+        gold += goldPerEnemy;
+        uiManagerScript.UpdateScoreText(score);
+        UpdateGoldTextUI(gold);
+    }
+
+    private void UpdateGoldTextUI(int gold)
+    {
+        uiManagerScript.UpdateGoldText(gold);
     }
 
     public void UpdatePlayerHealth(float damage)
@@ -176,18 +191,14 @@ public class GameManager : MonoBehaviour
 
     public void UpdatePlayerHealthUI()
     {
-        UIManagerScript.UpdatePlayerHealthSlider(playerHealth);
+        uiManagerScript.UpdatePlayerHealthSlider(playerHealth);
     }
 
-    public void WaveStart()
-    {
-        Debug.Log("Start Wave!");
-    }
-
+    //timeScale to 0 is scene independent, needs to be set to 1 if changing scene
     private void GameOver()
     {
         Time.timeScale = 0;
-        UIManagerScript.UpdateGameOverPanel();
+        uiManagerScript.UpdateGameOverPanel();
     }
 
     public void RestartGame()
@@ -200,24 +211,30 @@ public class GameManager : MonoBehaviour
         MainManager.Instance.MainMenu();
     }
 
+    //Check WaveTemplate for next wave and start Coroutine for each WaveIndividual
     public void SpawnNextWave()
     {
-        UIManagerScript.UpdateWaveText(wave + 1);
+        if (wave >= waveData.Count)
+        {
+            Debug.LogError("Next wave index is greater than the amount of waves. Cancel spawn wave.");
+            return;
+        }
+        uiManagerScript.UpdateWaveText(wave + 1);
 
         Vector3 spawnPosition = new Vector3(0, 0, spawnZPosition);
-        WaveTemplate currentWaveData = waveData[0]; //change waveData[0] to appropriate number when more waves are created
+
+        WaveTemplate currentWaveData = waveData[wave]; 
 
         foreach(WaveIndividual enemyType in currentWaveData.enemies)
         {
             StartCoroutine(SpawnRoutine(enemyType.enemyPrefab, spawnPosition, enemyType.numberOfSpawns, enemyType.spawnFrequency));
         }
 
-        //StartCoroutine(SpawnRoutine(spawnPrefabs[0], spawnPosition, wave, 1));
-        //StartCoroutine(SpawnRoutine(spawnPrefabs, spawnPosition, 10, spawnFrequency));
         wave++;
 
     }
 
+    //Method called when shop button is clicked, selects tower based on cost and starts building process
     public void BuyTower(int cost)
     {
 
@@ -225,7 +242,7 @@ public class GameManager : MonoBehaviour
         {
             deposit = cost;
             gold -= cost;
-            UIManagerScript.UpdateGoldText(gold);
+            uiManagerScript.UpdateGoldText(gold);
             isBuilding = true;
             
             selectedTower = GetTowerByCost(cost);
@@ -237,6 +254,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //Instantiate tower at mouse raycast position
     private void BuildTower(GameObject towerToBuild)
     {
         Vector3 spawnPos = GetMousePositionRay();
@@ -245,12 +263,9 @@ public class GameManager : MonoBehaviour
             selectedTower = Instantiate(towerToBuild, spawnPos, selectedTower.transform.rotation);
             selectedTower.GetComponent<TowerBehavior>().DisableTower();
         }
-
-        //Initiate tower but set it to inactive -> access towerBehavior and implement logic
-        //Update position of tower every frame ScreenToWorldPoint or Raycast
-        //On second click place tower or error if collision with tower or floor
     }
 
+    //Finalize building process
     private void PlaceTower()
     {
         isBuilding = false;
@@ -258,6 +273,7 @@ public class GameManager : MonoBehaviour
         selectedTower = null;
     }
 
+    //Uses raycast to check if mouse position covers the ray layer
     private Vector3 GetMousePositionRay()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -274,6 +290,7 @@ public class GameManager : MonoBehaviour
         return hitPoint;
     }
 
+    //WIP method of getting tower prefab based on cost, might change index -> cost
     private GameObject GetTowerByCost(int cost)
     {
         if(cost == 10)
