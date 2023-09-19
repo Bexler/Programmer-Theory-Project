@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     private GameObject selectedTower;
     private float towerHeight = 0.5f;
     private int goldPerEnemy = 5;
+    private int enemiesAlive = 0;
+    private int spawnCoroutinesCount = 0;
 
     //public variables
     public float playerHealth = 10f;
@@ -83,31 +85,37 @@ public class GameManager : MonoBehaviour
     //spawn each element of a list once at spawnPos in frequency based delay between element spawns
     IEnumerator SpawnRoutine(List<GameObject> enemyList, Vector3 spawnPos, float frequency)
     {
+        spawnCoroutinesCount++;
         foreach (GameObject enemy in enemyList)
         {
             SpawnEnemy(enemy, spawnPos);
             yield return new WaitForSeconds(frequency);
         }
+        spawnCoroutinesCount--;
     }
 
     //spawn random elements of a list at spawnPos for amount of times in frequency 
     IEnumerator SpawnRoutine(List<GameObject> randomEnemyList, Vector3 spawnPos, int amount, float frequency) 
     {
-        for(int i = 0; i < amount; i++)
+        spawnCoroutinesCount++;
+        for (int i = 0; i < amount; i++)
         {
             SpawnRandomEnemy(randomEnemyList, spawnPos);
             yield return new WaitForSeconds(frequency);
         }
+        spawnCoroutinesCount--;
     }
 
     //spawn specific gameObject at spawnPos for amount of times in frequency 
     IEnumerator SpawnRoutine(GameObject enemy, Vector3 spawnPos, int amount, float frequency)
     {
-        for(int i = 0; i < amount; i++)
+        spawnCoroutinesCount++;
+        for (int i = 0; i < amount; i++)
         {
             SpawnEnemy(enemy, spawnPos);
             yield return new WaitForSeconds(frequency);
         }
+        spawnCoroutinesCount--;
     }
 
     //Spawn adds when big enemies get defeated
@@ -124,6 +132,7 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(enemy, spawnPos, enemy.transform.rotation);
         EventManager.Instance.EnemySpawn();
+        enemiesAlive++;
     }
 
     //Method for spawning a single enemy multiple times
@@ -157,6 +166,11 @@ public class GameManager : MonoBehaviour
     //Method that is bound to the OnEnemyDeath event that checks if defeated enemy spawns adds
     private void EnemyDeathReaction(GameObject enemy)
     {
+        enemiesAlive--;
+        if(enemiesAlive == 0 && spawnCoroutinesCount == 0)
+        {
+            EventManager.Instance.FinishWave();
+        }
         if(enemy.GetComponent<EnemyBehavior>().baseSpeed == 3)
         {
             //Debug.Log("Found slow and big!");
@@ -231,7 +245,7 @@ public class GameManager : MonoBehaviour
         }
 
         wave++;
-
+        EventManager.Instance.NextWave(wave);
     }
 
     //Method called when shop button is clicked, selects tower based on cost and starts building process

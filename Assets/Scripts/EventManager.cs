@@ -13,6 +13,10 @@ public class EventManager : MonoBehaviour
 
     public event Action OnEnemySpawn;
 
+    public event Action<int> OnNextWave;
+
+    public event Action OnFinishWave;
+
     private void Awake()
     {
         if(Instance != null)
@@ -52,5 +56,17 @@ public class EventManager : MonoBehaviour
     {
         Debug.Log("Enemy Spawn!");
         OnEnemySpawn?.Invoke();
+    }
+
+    public void NextWave(int waveIndex)
+    {
+        Debug.Log("Next Wave!");
+        OnNextWave?.Invoke(waveIndex);
+    }
+
+    public void FinishWave()
+    {
+        Debug.Log("Finished Wave!");
+        OnFinishWave?.Invoke();
     }
 }
