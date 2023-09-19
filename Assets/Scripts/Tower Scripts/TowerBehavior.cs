@@ -15,12 +15,13 @@ public abstract class TowerBehavior : MonoBehaviour
     private Coroutine attackRoutine;
     private bool isNewEnemySpawned = false;
 
+    private bool isActive = false;
+
     protected float attackFrequency { get; set; }
 
     private void OnEnable()
     {
-        EventManager.Instance.OnEnemyDeath += AddDefeatedEnemy;
-        EventManager.Instance.OnEnemySpawn += UpdateEnemiesInRange;
+        
     }
 
     private void OnDisable()
@@ -33,7 +34,7 @@ public abstract class TowerBehavior : MonoBehaviour
     protected virtual void Start()
     {
         range = GetComponent<SphereCollider>().radius;
-        DisableRangeIndicator();
+        //DisableRangeIndicator();
     }
 
     // Update is called once per frame
@@ -67,7 +68,7 @@ public abstract class TowerBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (isActive && other.CompareTag("Enemy"))
         {
             //for testing purposes show the amount of towers that the enemy is in range for
             other.GetComponent<EnemyBehavior>().towerTargetCount++;
@@ -79,7 +80,7 @@ public abstract class TowerBehavior : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (isActive && other.CompareTag("Enemy"))
         {
             //for testing purposes show the amount of towers that the enemy is in range for
             other.GetComponent<EnemyBehavior>().towerTargetCount--;
@@ -89,13 +90,36 @@ public abstract class TowerBehavior : MonoBehaviour
         }
     }
 
+    public void EnableTower()
+    {
+        isActive = true;
+        EventManager.Instance.OnEnemyDeath += AddDefeatedEnemy;
+        EventManager.Instance.OnEnemySpawn += UpdateEnemiesInRange;
+        AddEnemiesInRange();
+    }
+
+    public void DisableTower()
+    {
+        isActive = false;
+        EventManager.Instance.OnEnemyDeath -= AddDefeatedEnemy;
+        EventManager.Instance.OnEnemySpawn -= UpdateEnemiesInRange;
+        ResetVariables();
+    }
+
+    private void ResetVariables()
+    {
+        enemiesInRange.Clear();
+        defeatedEnemies.Clear();
+        isEnemyInRange = false;
+    }
+
     private void AddEnemyInRange(GameObject enemy)
     {
         if (!enemiesInRange.Contains(enemy))
         {
             enemiesInRange.Add(enemy);
+            CheckFirstEnemyInRange();
         }
-        CheckFirstEnemyInRange();
     }
 
     protected virtual void RemoveEnemyInRange(GameObject enemy)
@@ -116,9 +140,9 @@ public abstract class TowerBehavior : MonoBehaviour
         foreach (Collider col in colliders)
         {
             // Check if the collider belongs to an object you want to detect
-            if (col.CompareTag("Enemy") && !enemiesInRange.Contains(col.gameObject) && !col.GetComponent<EnemyBehavior>().isDefeated)
+            if (col.CompareTag("Enemy") && !col.GetComponent<EnemyBehavior>().isDefeated)
             {
-                enemiesInRange.Add(col.gameObject);
+                AddEnemyInRange(col.gameObject);
             }
         }
         isNewEnemySpawned = false;

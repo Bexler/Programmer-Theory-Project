@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> spawnPrefabs;
     [SerializeField] private List<GameObject> towerPrefabs;
     [SerializeField] private GameObject addPrefab;
+    [SerializeField] private LayerMask groundLayer;
     private float spawnFrequency = 1f;
 
     private int gold = 0;
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     private int wave = 0;
     private int deposit = 0;
     private bool isBuilding;
+    private GameObject selectedTower;
 
     [SerializeField] private GameObject UIManager;
     private MainUIManager UIManagerScript;
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         if (isBuilding)
         {
+            selectedTower.transform.position = GetMousePositionRay();
             //Update position of tower being built accordingly here
         }
     }
@@ -206,19 +209,41 @@ public class GameManager : MonoBehaviour
             deposit = cost;
             gold -= cost;
             isBuilding = true;
-            if (cost == 10)
-            {
-                GameObject towerToBuild = GetTowerByCost(cost);
-                BuildTower(towerToBuild);
-            }
+            
+            selectedTower = GetTowerByCost(cost);
+            BuildTower(selectedTower);
+
         }
     }
 
-    private void BuildTower(GameObject selectedTower)
+    private void BuildTower(GameObject towerToBuild)
     {
+        Vector3 spawnPos = GetMousePositionRay();
+        if(spawnPos != Vector3.zero)
+        {
+            selectedTower = Instantiate(towerToBuild, spawnPos, selectedTower.transform.rotation);
+
+        }
+
         //Initiate tower but set it to inactive -> access towerBehavior and implement logic
         //Update position of tower every frame ScreenToWorldPoint or Raycast
         //On second click place tower or error if collision with tower or floor
+    }
+
+    private Vector3 GetMousePositionRay()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector3 hitPoint = Vector3.zero;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
+        {
+            // Get the hit point.
+            hitPoint = hit.point;
+
+        }
+
+        return hitPoint;
     }
 
     private GameObject GetTowerByCost(int cost)
