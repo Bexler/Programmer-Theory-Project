@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c5df136d6c00942808414565c4493c, type: 3}
-  m_Name: WaveTemplate_02
+  m_Script: {fileID: 11500000, guid: 4cf924ef6b664a8429baaace27c6165b, type: 3}
+  m_Name: Wave03_Individual03
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 11400000, guid: 6629785c6031f134fba9d9289bbd2210, type: 2}
-  - {fileID: 11400000, guid: 1142585297b323e4caf73d28dde386f4, type: 2}
-  isRandom: 0
+  enemyPrefab: {fileID: 4196077961545423840, guid: 0bcedb845d02a574da8e60fb5edb5093, type: 3}
+  numberOfSpawns: 3
+  spawnFrequency: 0.6
