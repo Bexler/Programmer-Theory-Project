@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     private float spawnFrequency = 1f;
 
-    private int gold = 0;
+    private int gold = 100;
     public float playerHealth = 10f;
     private int score = 0;
     private int wave = 0;
@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(SpawnRoutine());
         UIManagerScript = UIManager.GetComponent<MainUIManager>();
         UpdatePlayerHealthUI();
+        UIManagerScript.UpdateGoldText(gold);
     }
 
     // Update is called once per frame
@@ -50,8 +51,16 @@ public class GameManager : MonoBehaviour
     {
         if (isBuilding)
         {
-            selectedTower.transform.position = GetMousePositionRay();
-            //Update position of tower being built accordingly here
+            Vector3 towerPos = GetMousePositionRay();
+            if(towerPos != Vector3.zero)
+            {
+                selectedTower.transform.position = GetMousePositionRay();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    PlaceTower();
+                }
+            }
+            
         }
     }
 
@@ -204,15 +213,20 @@ public class GameManager : MonoBehaviour
 
     public void BuyTower(int cost)
     {
-        if (gold > cost)
+
+        if (gold >= cost)
         {
             deposit = cost;
             gold -= cost;
+            UIManagerScript.UpdateGoldText(gold);
             isBuilding = true;
             
             selectedTower = GetTowerByCost(cost);
             BuildTower(selectedTower);
 
+        } else
+        {
+            Debug.Log("Not enough money! You have: " + gold + ", you need: " + cost);
         }
     }
 
@@ -222,12 +236,19 @@ public class GameManager : MonoBehaviour
         if(spawnPos != Vector3.zero)
         {
             selectedTower = Instantiate(towerToBuild, spawnPos, selectedTower.transform.rotation);
-
+            selectedTower.GetComponent<TowerBehavior>().DisableTower();
         }
 
         //Initiate tower but set it to inactive -> access towerBehavior and implement logic
         //Update position of tower every frame ScreenToWorldPoint or Raycast
         //On second click place tower or error if collision with tower or floor
+    }
+
+    private void PlaceTower()
+    {
+        isBuilding = false;
+        selectedTower.GetComponent<TowerBehavior>().EnableTower();
+        selectedTower = null;
     }
 
     private Vector3 GetMousePositionRay()
@@ -250,13 +271,13 @@ public class GameManager : MonoBehaviour
     {
         if(cost == 10)
         {
-            return spawnPrefabs[0];
+            return towerPrefabs[0];
         }
         if(cost == 15)
         {
-            return spawnPrefabs[1];
+            return towerPrefabs[1];
         }
 
-        return spawnPrefabs[2];
+        return towerPrefabs[2];
     }
 }

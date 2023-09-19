@@ -21,7 +21,7 @@ public abstract class TowerBehavior : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        EnableTower();
     }
 
     private void OnDisable()
@@ -95,6 +95,7 @@ public abstract class TowerBehavior : MonoBehaviour
         isActive = true;
         EventManager.Instance.OnEnemyDeath += AddDefeatedEnemy;
         EventManager.Instance.OnEnemySpawn += UpdateEnemiesInRange;
+        DisableRangeIndicator();
         AddEnemiesInRange();
     }
 
@@ -103,6 +104,7 @@ public abstract class TowerBehavior : MonoBehaviour
         isActive = false;
         EventManager.Instance.OnEnemyDeath -= AddDefeatedEnemy;
         EventManager.Instance.OnEnemySpawn -= UpdateEnemiesInRange;
+        EnableRangeIndicator();
         ResetVariables();
     }
 
@@ -200,4 +202,5 @@ public abstract class TowerBehavior : MonoBehaviour
     }
 
     protected abstract void Attack();
+
 }
