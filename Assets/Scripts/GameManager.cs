@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 /* 
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<WaveTemplate> waveData;
     [SerializeField] private GameObject addPrefab;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask UI;
     [SerializeField] private GameObject uiManager;
 
     //private fields
@@ -75,12 +77,40 @@ public class GameManager : MonoBehaviour
                 selectedTower.transform.position = adjustedPos;
 
                 bool isTowerBlocked = selectedTower.GetComponent<TowerBehavior>().IsTowerBlocked();
-                if (Input.GetMouseButtonDown(0) && !isTowerBlocked)
+                if (Input.GetMouseButtonDown(0) && !isTowerBlocked && !CheckSellButton())
                 {
                     PlaceTower();
                 }
             }
         }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                CheckSellButton();
+            }
+        }
+    }
+
+    private bool CheckSellButton()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+
+        // Check if the ray hits a UI element
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, UI))
+        {
+            Debug.Log("Hit something: ");
+            if (hit.collider.CompareTag("SellButton"))
+            {
+                Debug.Log("Hit Sell Button!");
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
 
@@ -269,11 +299,11 @@ public class GameManager : MonoBehaviour
     public void BuyTower(int cost)
     {
 
-        if (gold >= cost)
+        if (!isBuilding && gold >= cost)
         {
             deposit = cost;
             gold -= cost;
-            uiManagerScript.UpdateGoldText(gold);
+            UpdateGoldTextUI(gold);
             isBuilding = true;
             
             selectedTower = GetTowerByCost(cost);
@@ -281,7 +311,20 @@ public class GameManager : MonoBehaviour
 
         } else
         {
-            Debug.Log("Not enough money! You have: " + gold + ", you need: " + cost);
+            Debug.Log("Not enough money or currently building");
+        }
+    }
+
+    public void SellTower()
+    {
+        if (isBuilding)
+        {
+            isBuilding = false;
+            gold += deposit;
+            UpdateGoldTextUI(gold);
+            deposit = 0;
+            Destroy(selectedTower);
+            selectedTower = null;
         }
     }
 
