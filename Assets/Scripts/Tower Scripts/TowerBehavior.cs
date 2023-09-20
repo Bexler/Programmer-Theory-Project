@@ -19,6 +19,8 @@ public abstract class TowerBehavior : MonoBehaviour
 
     protected float attackFrequency { get; set; }
 
+    public int placementBlockers = 0;
+
     private void OnEnable()
     {
         EnableTower();
@@ -203,4 +205,19 @@ public abstract class TowerBehavior : MonoBehaviour
 
     protected abstract void Attack();
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Tower"))
+        {
+            placementBlockers++;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Tower"))
+        {
+            placementBlockers--;
+        }
+    }
 }

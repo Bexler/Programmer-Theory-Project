@@ -73,7 +73,9 @@ public class GameManager : MonoBehaviour
                 Vector3 adjustedPos = new Vector3(towerPos.x, towerPos.y + towerHeight, towerPos.z);
 
                 selectedTower.transform.position = adjustedPos;
-                if (Input.GetMouseButtonDown(0))
+
+                bool isTowerBlocked = (selectedTower.GetComponent<TowerBehavior>().placementBlockers > 0);
+                if (Input.GetMouseButtonDown(0) && !isTowerBlocked)
                 {
                     PlaceTower();
                 }
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
         foreach (GameObject enemy in enemyList)
         {
             SpawnEnemy(enemy, spawnPos);
-            yield return new WaitForSeconds(frequency);
+            yield return new WaitForSeconds(1/frequency);
         }
         spawnCoroutinesCount--;
     }
@@ -101,7 +103,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             SpawnRandomEnemy(randomEnemyList, spawnPos);
-            yield return new WaitForSeconds(frequency);
+            yield return new WaitForSeconds(1/frequency);
         }
         spawnCoroutinesCount--;
     }
@@ -113,7 +115,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < amount; i++)
         {
             SpawnEnemy(enemy, spawnPos);
-            yield return new WaitForSeconds(frequency);
+            yield return new WaitForSeconds(1/frequency);
         }
         spawnCoroutinesCount--;
     }
