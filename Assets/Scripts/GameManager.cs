@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
                 selectedTower.transform.position = adjustedPos;
 
-                bool isTowerBlocked = (selectedTower.GetComponent<TowerBehavior>().placementBlockers > 0);
+                bool isTowerBlocked = selectedTower.GetComponent<TowerBehavior>().IsTowerBlocked();
                 if (Input.GetMouseButtonDown(0) && !isTowerBlocked)
                 {
                     PlaceTower();

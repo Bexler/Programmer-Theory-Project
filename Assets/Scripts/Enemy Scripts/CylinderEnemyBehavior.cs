@@ -8,14 +8,13 @@ public class CylinderEnemyBehavior : EnemyBehavior
     //Accelerate when taking damage
     //Can only be slowed down to base speed
 
-    private float baseHealth;
-
     protected override void Start()
     {
+
         health = 10 + (2 * waveWhenSpawned);
-        baseHealth = health;
+
         speed = 5f * (1 + (waveWhenSpawned / 100) * 5);
-        baseSpeed = speed;
+        base.Start();
     }
 
     public override void SlowSpeed(float slowStrength)

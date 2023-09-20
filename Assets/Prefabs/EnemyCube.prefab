@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5040770428036490240}
   - component: {fileID: 391019387023565354}
   - component: {fileID: 363229941238010733}
-  - component: {fileID: 7732561949393677503}
   m_Layer: 0
   m_Name: EnemyCube
   m_TagString: Enemy
@@ -106,20 +105,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7732561949393677503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2990128699641779588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce3a0438987673a41bb4c6d08f415878, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  baseSpeed: 0
-  health: 5
-  isDefeated: 0
-  towerTargetCount: 0

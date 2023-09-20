@@ -11,10 +11,11 @@ public abstract class TowerBehavior : MonoBehaviour
     protected List<GameObject> defeatedEnemies = new List<GameObject> ();
 
     [SerializeField] private GameObject rangeIndicator;
+
     protected bool isEnemyInRange = false;
+
     private Coroutine attackRoutine;
     private bool isNewEnemySpawned = false;
-
     private bool isActive = false;
 
     protected float attackFrequency { get; set; }
@@ -219,5 +220,10 @@ public abstract class TowerBehavior : MonoBehaviour
         {
             placementBlockers--;
         }
+    }
+
+    public bool IsTowerBlocked()
+    {
+        return placementBlockers > 0 ? true : false;
     }
 }

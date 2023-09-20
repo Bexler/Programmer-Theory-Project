@@ -10,9 +10,12 @@ public class BigEnemyBehavior : EnemyBehavior
 
     protected override void Start()
     {
+
         health = 20 + (3 * waveWhenSpawned);
+
         speed = 3f * (1 + (waveWhenSpawned/100)*5);
-        baseSpeed = speed;
+
+        base.Start();
     }
 
     //Add spawn logic is in GameManager for now

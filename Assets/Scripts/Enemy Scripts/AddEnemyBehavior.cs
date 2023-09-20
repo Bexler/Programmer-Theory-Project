@@ -8,6 +8,7 @@ public class AddEnemyBehavior : EnemyBehavior
     {
         health = 5 + waveWhenSpawned;
         speed = 5f * (1 + (waveWhenSpawned / 100) * 5);
-        baseSpeed = speed;
+
+        base.Start();
     }
 }

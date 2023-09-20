@@ -21,7 +21,6 @@ public class RotatingCube : MonoBehaviour
     void Start()
     {
 
-        //Calculate();
         cubeMR = GetComponent<MeshRenderer>();
         texture = cubeMR.material;
         texture.color = GetRandomColor();
@@ -40,6 +39,7 @@ public class RotatingCube : MonoBehaviour
     {
         while (true)
         {
+            GetRandomChangeDelay();
             GetRandomColor();
             GetRandomRotation();
             yield return new WaitForSeconds(changeDelay);
@@ -75,16 +75,8 @@ public class RotatingCube : MonoBehaviour
         eulerRotation = (eulerRotation + (rotationDifference * Time.deltaTime / changeDelay ));
     }
 
-    private void Calculate()
+    private void GetRandomChangeDelay()
     {
-        double result = 1;
-        
-        for(float i = 20; i > 0; i--)
-        {
-            result *= (i / (49 - i));
-            Debug.Log("Current number: " + i + " :" + 1/result);
-        }
-        Debug.Log("Result: " + result);
-        Debug.Log(1 / result);
+        changeDelay = Random.Range(3f, 5f);
     }
 }

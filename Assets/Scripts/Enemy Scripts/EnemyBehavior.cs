@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public abstract class EnemyBehavior : MonoBehaviour
 {
 
     protected float speed;
     public float baseSpeed;
-    public float health = 5f;
+    public float health;
+    protected float baseHealth;
     public bool isDefeated = false;
     protected int waveWhenSpawned;
+
+    private Material enemyMaterial;
 
     //for testing purposes check tower targeting functionality
     public int towerTargetCount = 0;
@@ -17,7 +20,9 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
+        enemyMaterial = GetComponent<MeshRenderer>().material;
+        baseHealth = health;
+        baseSpeed = speed;
     }
 
     // Update is called once per frame
@@ -56,6 +61,7 @@ public class EnemyBehavior : MonoBehaviour
     public virtual void DamageEnemy(float damage)
     {
         health -= damage;
+        UpdateMaterial();
         if(health <= 0)
         {
             isDefeated = true;
@@ -66,5 +72,11 @@ public class EnemyBehavior : MonoBehaviour
     public void SetSpawnedWave(int wave)
     {
         waveWhenSpawned = wave;
+    }
+
+    private void UpdateMaterial()
+    {
+        float healthPercentage = health / baseHealth;
+        enemyMaterial.color = Color.white * (1f - healthPercentage);
     }
 }
