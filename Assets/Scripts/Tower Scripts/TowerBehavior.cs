@@ -36,7 +36,7 @@ public abstract class TowerBehavior : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        range = GetComponent<SphereCollider>().radius;
+        range = GetComponentInChildren<SphereCollider>().radius;
         //DisableRangeIndicator();
     }
 
@@ -95,6 +95,7 @@ public abstract class TowerBehavior : MonoBehaviour
 
     public void EnableTower()
     {
+        Debug.Log("Enable Tower.");
         isActive = true;
         EventManager.Instance.OnEnemyDeath += AddDefeatedEnemy;
         EventManager.Instance.OnEnemySpawn += UpdateEnemiesInRange;
@@ -104,6 +105,7 @@ public abstract class TowerBehavior : MonoBehaviour
 
     public void DisableTower()
     {
+        Debug.Log("Disable Tower.");
         isActive = false;
         EventManager.Instance.OnEnemyDeath -= AddDefeatedEnemy;
         EventManager.Instance.OnEnemySpawn -= UpdateEnemiesInRange;
@@ -194,12 +196,12 @@ public abstract class TowerBehavior : MonoBehaviour
         }
     }
 
-    private void DisableRangeIndicator()
+    public void DisableRangeIndicator()
     {
         rangeIndicator.SetActive(false);
     }
 
-    private void EnableRangeIndicator()
+    public void EnableRangeIndicator()
     {
         rangeIndicator.SetActive(true);
     }

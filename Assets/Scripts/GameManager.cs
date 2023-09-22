@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addPrefab;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask layerUI;
+    [SerializeField] private LayerMask ignoreRayLayer;
     [SerializeField] private GameObject uiManager;
     
 
@@ -33,7 +34,8 @@ public class GameManager : MonoBehaviour
     private int wave = 0;
     private int deposit = 0;
     private bool isBuilding;
-    private GameObject selectedTower;
+    private GameObject selectedTower = null;
+    private TowerBehavior selectedTowerBehavior = null;
     private float towerHeight = 0.5f;
     private int goldPerEnemy = 5;
     private int enemiesAlive = 0;
@@ -87,17 +89,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !IsMouseOverButton())
             {
-                ////Debug.Log("Clicked.");
-                //if (IsMouseOverSomething())
-                //{
-                //    Debug.Log("Clicked something!");
-                //}
-                //if (IsMouseOverButton())
-                //{
-                //    Debug.Log("Clicked Button!");
-                //}
+                if(selectedTower != null)   //clicking somewhere while tower selected, deselects it
+                {
+                    DeselectTower();
+                }
+                SelectTowerOnClick();   //select new tower
+                
             }
         }
     }
@@ -105,6 +104,45 @@ public class GameManager : MonoBehaviour
     private bool IsMouseOverSomething()
     {
         return EventSystem.current.IsPointerOverGameObject();
+    }
+
+    private bool SelectTowerOnClick()
+    {
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            // You've hit a 3D object.
+            GameObject hitObject = hit.collider.gameObject;
+            // Do something with the hitObject.
+            if (hitObject.CompareTag("Tower"))
+            {
+                
+                SelectTower(hitObject);
+                return true;
+            }
+        }
+        return false;
+
+        //PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        //pointerEventData.position = Input.mousePosition;
+
+        //List<RaycastResult> raycastResultList = new List<RaycastResult>();
+        //EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
+
+        //Debug.Log("Raycast hit " + raycastResultList.Count + " targets!");
+
+        //for (int i = 0; i < raycastResultList.Count; i++){
+        //    if (raycastResultList[i].gameObject.CompareTag("Tower"))
+        //    {
+        //        SelectTower(raycastResultList[i].gameObject);
+        //        return true;
+        //    }
+        //}
+
+        //return false;
     }
 
     private bool IsMouseOverButton()
@@ -334,7 +372,7 @@ public class GameManager : MonoBehaviour
             UpdateGoldTextUI(gold);
             isBuilding = true;
             
-            selectedTower = GetTowerByCost(cost);
+            SelectTower(GetTowerByCost(cost));
             BuildTower(selectedTower);
 
         } else
@@ -351,8 +389,7 @@ public class GameManager : MonoBehaviour
             gold += deposit;
             UpdateGoldTextUI(gold);
             deposit = 0;
-            Destroy(selectedTower);
-            selectedTower = null;
+            DestroyTower(selectedTower);
         }
     }
 
@@ -363,7 +400,7 @@ public class GameManager : MonoBehaviour
         if(spawnPos != Vector3.zero)
         {
             selectedTower = Instantiate(towerToBuild, spawnPos, selectedTower.transform.rotation);
-            selectedTower.GetComponent<TowerBehavior>().DisableTower();
+            selectedTowerBehavior.DisableTower();
         }
     }
 
@@ -371,8 +408,36 @@ public class GameManager : MonoBehaviour
     private void PlaceTower()
     {
         isBuilding = false;
-        selectedTower.GetComponent<TowerBehavior>().EnableTower();
+        selectedTowerBehavior.EnableTower();
+        DeselectTower();
+    }
+
+    private void SelectTower(GameObject tower)
+    {
+        if (selectedTower != null)
+        {
+            DeselectTower();
+        }
+        selectedTower = tower;
+        selectedTowerBehavior = selectedTower.GetComponent<TowerBehavior>();
+        selectedTowerBehavior.EnableRangeIndicator();
+    }
+
+    private void DestroyTower(GameObject tower)
+    {
+        if(selectedTower != null)
+        {
+            DeselectTower();
+        }
+        Destroy(tower);
+    }
+
+    private void DeselectTower()
+    {
+        selectedTowerBehavior.DisableRangeIndicator();
         selectedTower = null;
+        selectedTowerBehavior = null;
+        
     }
 
     //Uses raycast to check if mouse position covers the ray layer

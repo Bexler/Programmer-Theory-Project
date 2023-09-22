@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 6472223881185958592, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
+      propertyPath: m_Radius
+      value: 7.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7620339554357805050, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_ReceiveShadows
       value: 1
@@ -129,3 +133,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesInRange: []
   rangeIndicator: {fileID: 1196953944722686777}
+  placementBlockers: 0
