@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,8 +22,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<WaveTemplate> waveData;
     [SerializeField] private GameObject addPrefab;
     [SerializeField] private LayerMask groundLayer;
-    [SerializeField] private LayerMask UI;
+    [SerializeField] private LayerMask layerUI;
     [SerializeField] private GameObject uiManager;
+    
 
     //private fields
     private MainUIManager uiManagerScript;
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
                 selectedTower.transform.position = adjustedPos;
 
                 bool isTowerBlocked = selectedTower.GetComponent<TowerBehavior>().IsTowerBlocked();
-                if (Input.GetMouseButtonDown(0) && !isTowerBlocked && !CheckSellButton())
+                if (Input.GetMouseButtonDown(0) && !isTowerBlocked && !IsMouseOverButton())
                 {
                     PlaceTower();
                 }
@@ -87,32 +89,58 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                CheckSellButton();
+                ////Debug.Log("Clicked.");
+                //if (IsMouseOverSomething())
+                //{
+                //    Debug.Log("Clicked something!");
+                //}
+                //if (IsMouseOverButton())
+                //{
+                //    Debug.Log("Clicked Button!");
+                //}
             }
         }
     }
 
-    private bool CheckSellButton()
+    private bool IsMouseOverSomething()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-
-        // Check if the ray hits a UI element
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, UI))
-        {
-            Debug.Log("Hit something: ");
-            if (hit.collider.CompareTag("SellButton"))
-            {
-                Debug.Log("Hit Sell Button!");
-                return true;
-            }
-
-        }
-
-        return false;
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
+    private bool IsMouseOverButton()
+    {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResultList = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
+
+        Debug.Log("Raycast hit " + raycastResultList.Count + " targets!");
+
+        for (int i = 0; i < raycastResultList.Count; i++)
+        {
+            //Debug.Log("Layer check: " + raycastResultList[i].gameObject.layer + " = " + layerUI.value);
+            //if (!IsInLayermask(raycastResultList[i].gameObject.layer, layerUI))
+            //{
+            //    Debug.Log("Not the same!");
+            //    raycastResultList.RemoveAt(i);
+            //    i--;
+            //}
+            if (!raycastResultList[i].gameObject.CompareTag("Button"))
+            {
+                Debug.Log("Removed non-button!");
+                raycastResultList.RemoveAt(i);
+                i--;
+            }
+        }
+
+        return raycastResultList.Count > 0;
+    }
+
+    private bool IsInLayermask(int layer, LayerMask layermask)
+    {
+        return layermask == (layermask | (1 << layer));
+    }
 
     //spawn each element of a list once at spawnPos in frequency based delay between element spawns
     IEnumerator SpawnRoutine(List<GameObject> enemyList, Vector3 spawnPos, float frequency)

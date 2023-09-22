@@ -7,7 +7,7 @@ TagManager:
   - Enemy
   - TowerGround
   - Tower
-  - SellButton
+  - Button
   layers:
   - Default
   - TransparentFX

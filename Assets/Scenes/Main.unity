@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 151616292}
   m_Layer: 5
   m_Name: Green Tower
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -756,7 +756,7 @@ GameObject:
   - component: {fileID: 254513367}
   m_Layer: 5
   m_Name: Blue Tower
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2205,10 +2205,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2026558254}
   - {fileID: 254513366}
   - {fileID: 1364185233}
   - {fileID: 151616291}
-  - {fileID: 2026558254}
   m_Father: {fileID: 1484076433}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2635,7 +2635,7 @@ GameObject:
   - component: {fileID: 1364185234}
   m_Layer: 5
   m_Name: Red Tower
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2786,14 +2786,14 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 651974622}
-  - {fileID: 454191229}
-  - {fileID: 2128563564}
-  - {fileID: 1720241670}
-  - {fileID: 2098430853}
   - {fileID: 620198673}
+  - {fileID: 651974622}
+  - {fileID: 2128563564}
+  - {fileID: 454191229}
+  - {fileID: 2098430853}
   - {fileID: 1692639994}
   - {fileID: 695395732}
+  - {fileID: 1720241670}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4332,7 +4332,7 @@ GameObject:
   - component: {fileID: 2026558258}
   m_Layer: 5
   m_Name: Sell Tower
-  m_TagString: SellButton
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4777,7 +4777,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  UI:
+  layerUI:
     serializedVersion: 2
     m_Bits: 32
   uiManager: {fileID: 1893245604}

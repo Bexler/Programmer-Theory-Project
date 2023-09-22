@@ -17,6 +17,11 @@ public abstract class EnemyBehavior : MonoBehaviour
     //for testing purposes check tower targeting functionality
     public int towerTargetCount = 0;
 
+    private void OnEnable()
+    {
+        enemyMaterial = GetComponent<MeshRenderer>().material;
+
+    }
     // Start is called before the first frame update
     protected virtual void Start()
     {
