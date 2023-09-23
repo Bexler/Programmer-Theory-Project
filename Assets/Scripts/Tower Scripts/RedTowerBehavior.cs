@@ -5,15 +5,41 @@ using UnityEngine;
 public class RedTowerBehavior : TowerBehavior
 {
 
+    private bool isEnemyTargeted = false;
     [SerializeField] private GameObject targetEnemy;
     private EnemyBehavior targetEnemyScript;
     private float damage = 0.5f;
+
+    [SerializeField] private GameObject laser;
 
     protected override void Start()
     {
         base.Start();
         attackFrequency = 5f;
         goldCost = 15;
+    }
+
+    private void Update()
+    {
+        if (isEnemyTargeted)
+        {
+            //set laser position
+            Vector3 enemyPos = targetEnemy.transform.position;
+            laser.transform.position = (enemyPos + transform.position)/2;
+
+            //set laser length
+            float laserLength = (laser.transform.position - transform.position).magnitude;
+            Vector3 newScale = laser.transform.localScale;
+            newScale.y = laserLength;
+            laser.transform.localScale = newScale;
+
+            //set laser rotation
+            Vector3 direction = targetEnemy.transform.position - laser.transform.position;
+            Quaternion laserRotation = Quaternion.LookRotation(direction);
+            laser.transform.rotation = laserRotation * Quaternion.Euler(90, 0, 0);
+            
+            //laser.transform.rotation = Quaternion.LookRotation(targetEnemy.transform.position - laser.transform.position);
+        }
     }
 
     private void UpdateTarget()
@@ -28,8 +54,7 @@ public class RedTowerBehavior : TowerBehavior
             if (enemyHealth > maxHealth)
             {
                 maxHealth = enemyHealth;
-                targetEnemy = enemy;
-                targetEnemyScript = enemyBehavior;
+                SelectTargetEnemy(enemy);
             }
         }
         if (maxHealth == 0)
@@ -54,8 +79,8 @@ public class RedTowerBehavior : TowerBehavior
 
         if (targetEnemyScript.isDefeated)
         {
-            targetEnemy = null;
-            targetEnemyScript = null;
+            DeselectTargetEnemy();
+
         }
     }
 
@@ -64,13 +89,28 @@ public class RedTowerBehavior : TowerBehavior
         base.RemoveEnemyInRange(enemy);
         if (enemy == targetEnemy)
         {
-            targetEnemy = null;
-            targetEnemyScript = null;
+            DeselectTargetEnemy();
             if (isEnemyInRange)
             {
                 UpdateTarget();
             }
         }
+    }
+
+    private void SelectTargetEnemy(GameObject enemy)
+    {
+        isEnemyTargeted = true;
+        targetEnemy = enemy;
+        targetEnemyScript = enemy.GetComponent<EnemyBehavior>();
+        laser.SetActive(true);
+    }
+
+    private void DeselectTargetEnemy()
+    {
+        isEnemyTargeted=false;
+        targetEnemy = null;
+        targetEnemyScript = null;
+        laser.SetActive(false);
     }
 
 
