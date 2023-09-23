@@ -15,7 +15,9 @@ public class MainUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private Slider playerHealthSlider;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject pausedPanel;
     [SerializeField] private Button sellButton;
+    [SerializeField] private Button pausedIcon;
     
 
     private string playerName;
@@ -68,6 +70,12 @@ public class MainUIManager : MonoBehaviour
     private void UpdateGameOverScoreText()
     {
         gameOverScoreText.text = "Your " + scoreText.text;
+    }
+
+    public void UpdatePausedUI(bool isPaused)
+    {
+        pausedIcon.gameObject.SetActive(!isPaused);
+        pausedPanel.SetActive(isPaused);
     }
 
     public void DisableSellButton()

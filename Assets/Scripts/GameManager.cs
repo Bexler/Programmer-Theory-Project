@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     private int goldPerEnemy = 5;
     private int enemiesAlive = 0;
     private int spawnCoroutinesCount = 0;
+    private bool isGamePaused = false;
 
     //public variables
     public float playerHealth = 10f;
@@ -320,6 +321,13 @@ public class GameManager : MonoBehaviour
     public void LoadMainMenu()
     {
         MainManager.Instance.MainMenu();
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = Mathf.Abs(Time.timeScale - 1);
+        isGamePaused = !isGamePaused;
+        uiManagerScript.UpdatePausedUI(isGamePaused);
     }
 
     //Check WaveTemplate for next wave and start Coroutine for each WaveIndividual
