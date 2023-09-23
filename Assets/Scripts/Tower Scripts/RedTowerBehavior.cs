@@ -8,7 +8,7 @@ public class RedTowerBehavior : TowerBehavior
     private bool isEnemyTargeted = false;
     [SerializeField] private GameObject targetEnemy;
     private EnemyBehavior targetEnemyScript;
-    private float damage = 0.5f;
+    private float damage = 1;
 
     [SerializeField] private GameObject laser;
 

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Wave04_Individual02
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 1963674252756067433, guid: e6513f1b15c11bb4697aada2dce105be, type: 3}
-  numberOfSpawns: 5
-  spawnFrequency: 1.5
+  numberOfSpawns: 4
+  spawnFrequency: 1
