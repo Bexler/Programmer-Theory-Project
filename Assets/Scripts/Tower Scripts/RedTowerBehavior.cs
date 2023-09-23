@@ -13,6 +13,7 @@ public class RedTowerBehavior : TowerBehavior
     {
         base.Start();
         attackFrequency = 5f;
+        goldCost = 15;
     }
 
     private void UpdateTarget()

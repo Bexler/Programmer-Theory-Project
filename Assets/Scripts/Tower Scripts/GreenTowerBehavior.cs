@@ -11,6 +11,7 @@ public class GreenTowerBehavior : TowerBehavior
     {
         base.Start();
         attackFrequency = 3f;
+        goldCost = 20;
     }
 
     protected override void Attack()

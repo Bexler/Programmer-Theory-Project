@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
     private int gold = 50;
     private int score = 0;
     private int wave = 0;
-    private int deposit = 0;
     private bool isBuilding;
     private GameObject selectedTower = null;
     private TowerBehavior selectedTowerBehavior = null;
@@ -108,7 +107,6 @@ public class GameManager : MonoBehaviour
 
     private bool SelectTowerOnClick()
     {
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -153,7 +151,7 @@ public class GameManager : MonoBehaviour
         List<RaycastResult> raycastResultList = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResultList);
 
-        Debug.Log("Raycast hit " + raycastResultList.Count + " targets!");
+        //Debug.Log("Raycast hit " + raycastResultList.Count + " targets!");
 
         for (int i = 0; i < raycastResultList.Count; i++)
         {
@@ -166,7 +164,7 @@ public class GameManager : MonoBehaviour
             //}
             if (!raycastResultList[i].gameObject.CompareTag("Button"))
             {
-                Debug.Log("Removed non-button!");
+                //Debug.Log("Removed non-button!");
                 raycastResultList.RemoveAt(i);
                 i--;
             }
@@ -367,13 +365,11 @@ public class GameManager : MonoBehaviour
 
         if (!isBuilding && gold >= cost)
         {
-            deposit = cost;
             gold -= cost;
             UpdateGoldTextUI(gold);
             isBuilding = true;
             
-            SelectTower(GetTowerByCost(cost));
-            BuildTower(selectedTower);
+            BuildTower(GetTowerByCost(cost));
 
         } else
         {
@@ -383,14 +379,21 @@ public class GameManager : MonoBehaviour
 
     public void SellTower()
     {
+        int price = selectedTowerBehavior.goldCost;
         if (isBuilding)
         {
             isBuilding = false;
-            gold += deposit;
-            UpdateGoldTextUI(gold);
-            deposit = 0;
-            DestroyTower(selectedTower);
+  
+        } else
+        {
+            price /= 2;
         }
+
+        Debug.Log("Selling for " + price);
+        gold += price;
+        UpdateGoldTextUI(gold);
+        DestroyTower(selectedTower);
+        
     }
 
     //Instantiate tower at mouse raycast position
@@ -399,7 +402,8 @@ public class GameManager : MonoBehaviour
         Vector3 spawnPos = GetMousePositionRay();
         if(spawnPos != Vector3.zero)
         {
-            selectedTower = Instantiate(towerToBuild, spawnPos, selectedTower.transform.rotation);
+            GameObject builtTower = Instantiate(towerToBuild, spawnPos, towerToBuild.transform.rotation);
+            SelectTower(builtTower);
             selectedTowerBehavior.DisableTower();
         }
     }
@@ -421,23 +425,28 @@ public class GameManager : MonoBehaviour
         selectedTower = tower;
         selectedTowerBehavior = selectedTower.GetComponent<TowerBehavior>();
         selectedTowerBehavior.EnableRangeIndicator();
+
+        uiManagerScript.EnableSellButton();
     }
 
-    private void DestroyTower(GameObject tower)
-    {
-        if(selectedTower != null)
-        {
-            DeselectTower();
-        }
-        Destroy(tower);
-    }
+    
 
     private void DeselectTower()
     {
         selectedTowerBehavior.DisableRangeIndicator();
         selectedTower = null;
         selectedTowerBehavior = null;
-        
+
+        uiManagerScript.DisableSellButton();
+
+    }
+private void DestroyTower(GameObject tower)
+    {
+        if(selectedTower != null)
+        {
+            DeselectTower();
+        }
+        Destroy(tower);
     }
 
     //Uses raycast to check if mouse position covers the ray layer

@@ -3862,6 +3862,7 @@ MonoBehaviour:
   waveText: {fileID: 2098430854}
   playerHealthSlider: {fileID: 1907568933}
   gameOverPanel: {fileID: 1720241669}
+  sellButton: {fileID: 2026558255}
 --- !u!4 &1893245606
 Transform:
   m_ObjectHideFlags: 0
@@ -4336,7 +4337,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2026558254
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4780,6 +4781,9 @@ MonoBehaviour:
   layerUI:
     serializedVersion: 2
     m_Bits: 32
+  ignoreRayLayer:
+    serializedVersion: 2
+    m_Bits: 0
   uiManager: {fileID: 1893245604}
   playerHealth: 10
 --- !u!4 &2133309459

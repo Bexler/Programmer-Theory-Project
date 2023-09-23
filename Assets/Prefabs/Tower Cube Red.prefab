@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1685443106712440744, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2845917110381459530, guid: 6cb05eae2569d1c4f97188c9be551cdc, type: 3}
       propertyPath: m_Name
       value: Tower Cube Red
@@ -95,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesInRange: []
   rangeIndicator: {fileID: 2708842547716550598}
+  placementBlockers: 0
   targetEnemy: {fileID: 0}
 --- !u!1 &2708842547716550598 stripped
 GameObject:

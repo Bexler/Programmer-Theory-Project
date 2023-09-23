@@ -15,6 +15,7 @@ public class MainUIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI waveText;
     [SerializeField] private Slider playerHealthSlider;
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private Button sellButton;
     
 
     private string playerName;
@@ -69,4 +70,13 @@ public class MainUIManager : MonoBehaviour
         gameOverScoreText.text = "Your " + scoreText.text;
     }
 
+    public void DisableSellButton()
+    {
+        sellButton.gameObject.SetActive(false);
+    }
+
+    public void EnableSellButton()
+    {
+        sellButton.gameObject.SetActive(true);
+    }
 }

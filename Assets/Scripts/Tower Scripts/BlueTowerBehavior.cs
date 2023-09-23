@@ -12,6 +12,7 @@ public class BlueTowerBehavior : TowerBehavior
     {
         base.Start();
         attackFrequency = 1f;
+        goldCost = 10;
     }
 
     protected override void Attack()

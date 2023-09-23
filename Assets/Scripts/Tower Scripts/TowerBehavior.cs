@@ -17,6 +17,7 @@ public abstract class TowerBehavior : MonoBehaviour
     private Coroutine attackRoutine;
     private bool isNewEnemySpawned = false;
     private bool isActive = false;
+    public int goldCost { get; protected set; }
 
     protected float attackFrequency { get; set; }
 
@@ -228,4 +229,5 @@ public abstract class TowerBehavior : MonoBehaviour
     {
         return placementBlockers > 0 ? true : false;
     }
+
 }
