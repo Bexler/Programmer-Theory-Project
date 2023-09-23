@@ -4603,3 +4603,64 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b797f9514a312d48b07bbab8a0696d2, type: 3}
+--- !u!1001 &8927197375694454380
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.83855516
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 21.456861
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.361272
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1658531872495869133, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749298063695260866, guid: 66261cccea20c7140b18544c920766fc, type: 3}
+      propertyPath: m_Name
+      value: P_SnowStorm
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 66261cccea20c7140b18544c920766fc, type: 3}

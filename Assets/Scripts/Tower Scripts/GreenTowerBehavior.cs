@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GreenTowerBehavior : TowerBehavior
 {
+    [SerializeField] private ParticleSystem snowStorm;
     private float slowStrength = 0.5f;
 
 
@@ -22,6 +23,18 @@ public class GreenTowerBehavior : TowerBehavior
             EnemyBehavior enemyBehavior = enemy.GetComponent<EnemyBehavior>();
             enemyBehavior.SlowSpeed(slowStrength);
         }
+    }
+
+    public override void EnableTower()
+    {
+        base.EnableTower();
+        snowStorm.Play();
+    }
+
+    public override void DisableTower()
+    {
+        base.DisableTower();
+        snowStorm.Stop();
     }
 
 

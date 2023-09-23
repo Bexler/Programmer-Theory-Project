@@ -94,7 +94,7 @@ public abstract class TowerBehavior : MonoBehaviour
         }
     }
 
-    public void EnableTower()
+    public virtual void EnableTower()
     {
         Debug.Log("Enable Tower.");
         isActive = true;
@@ -104,7 +104,7 @@ public abstract class TowerBehavior : MonoBehaviour
         AddEnemiesInRange();
     }
 
-    public void DisableTower()
+    public virtual void DisableTower()
     {
         Debug.Log("Disable Tower.");
         isActive = false;
