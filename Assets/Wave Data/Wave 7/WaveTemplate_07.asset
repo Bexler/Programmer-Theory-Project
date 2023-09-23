@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c5df136d6c00942808414565c4493c, type: 3}
   m_Name: WaveTemplate_07
   m_EditorClassIdentifier: 
-  enemies: []
+  enemies:
+  - {fileID: 11400000, guid: c1e048b14394e2347b1da21a01e840ae, type: 2}
+  - {fileID: 11400000, guid: f87d2f96a35d3374aa80162e79c111f3, type: 2}
   isRandom: 0

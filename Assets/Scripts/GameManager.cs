@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour
     private GameObject selectedTower = null;
     private TowerBehavior selectedTowerBehavior = null;
     private float towerHeight = 0.5f;
-    private int goldPerEnemy = 5;
     private int enemiesAlive = 0;
     private int spawnCoroutinesCount = 0;
     private bool isGamePaused = false;
@@ -269,7 +268,7 @@ public class GameManager : MonoBehaviour
         {
             EventManager.Instance.FinishWave();
         }
-        if(enemy.GetComponent<EnemyBehavior>().baseSpeed == 3)
+        if(enemy.GetComponent<BigEnemyBehavior>() != null)
         {
             //Debug.Log("Found slow and big!");
             SpawnAdds(enemy.transform.position);
@@ -280,8 +279,9 @@ public class GameManager : MonoBehaviour
     //Update variables and UI after enemy defeat
     private void AddMoney(GameObject enemy)
     {
-        score++;
-        gold += goldPerEnemy;
+        int bonus = enemy.GetComponent<EnemyBehavior>().goldOnDeath;
+        score += bonus;
+        gold += bonus;
         uiManagerScript.UpdateScoreText(score);
         UpdateGoldTextUI(gold);
     }

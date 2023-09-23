@@ -14,6 +14,8 @@ public abstract class EnemyBehavior : MonoBehaviour
 
     private Material enemyMaterial;
 
+    public int goldOnDeath { get; protected set; }
+
     //for testing purposes check tower targeting functionality
     public int towerTargetCount = 0;
 
@@ -26,6 +28,9 @@ public abstract class EnemyBehavior : MonoBehaviour
     protected virtual void Start()
     {
         enemyMaterial = GetComponent<MeshRenderer>().material;
+        
+        health *= Mathf.Pow(1.1f, waveWhenSpawned);
+        speed *= Mathf.Pow(1.05f, waveWhenSpawned);
         baseHealth = health;
         baseSpeed = speed;
     }
